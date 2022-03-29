@@ -103,7 +103,7 @@ const SideBar: React.FC = () => {
               : RoutePaths.Connections
           }
         >
-          <img src="/simpleLogo.svg" alt="logo" height={33} width={33} />
+          <img src="/logo2.png" alt="logo" height={55} width={55} />
         </Link>
         <Menu>
           {workspace.displaySetupWizard ? (

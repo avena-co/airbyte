@@ -1,10 +1,10 @@
 export const theme = {
-  primaryColor: "#615EFF",
+  primaryColor: "#ffd600",
   primaryColor25: "rgba(98, 94, 255, .25)",
   primaryColor12: "rgba(103, 87, 255, .12)",
   mediumPrimaryColor: "#36348F",
   mediumPrimaryColor20: "rgba(73, 68, 193, .2)",
-  darkPrimaryColor: "#010047",
+  darkPrimaryColor: "#000000",
   darkPrimaryColor60: "rgba(1, 0, 71, .6)",
   brightPrimaryColor: "#C5C4FF",
   lightPrimaryColor: "#EDEBFF",
