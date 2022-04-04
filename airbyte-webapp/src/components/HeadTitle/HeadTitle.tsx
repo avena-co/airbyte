@@ -2,7 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { useIntl } from "react-intl";
 
-const AIRBYTE = "Airbyte";
+const AIRBYTE = "IntelliBridge";
 const SEPARATOR = "|";
 
 type FormattedHeadTitle = {
