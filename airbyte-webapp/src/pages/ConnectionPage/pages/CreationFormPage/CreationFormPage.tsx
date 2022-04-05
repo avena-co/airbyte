@@ -32,6 +32,7 @@ export enum StepsTypes {
   CREATE_ENTITY = "createEntity",
   CREATE_CONNECTOR = "createConnector",
   CREATE_CONNECTION = "createConnection",
+  CREATE_TRANSFORMATION = "createTransformation",
 }
 
 export enum EntityStepsTypes {
@@ -243,6 +244,10 @@ const CreationFormPage: React.FC = () => {
           {
             id: StepsTypes.CREATE_CONNECTOR,
             name: <FormattedMessage id="onboarding.createDestination" />,
+          },
+          {
+            id: StepsTypes.CREATE_TRANSFORMATION,
+            name: <FormattedMessage id="onboarding.createTransformation" />,
           },
           {
             id: StepsTypes.CREATE_CONNECTION,
