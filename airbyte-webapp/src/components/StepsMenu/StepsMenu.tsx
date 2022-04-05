@@ -34,7 +34,6 @@ const StepsMenu: React.FC<IProps> = ({
   return (
     <Content>
       {data.map((item, key) => {
-        console.log("item", item);
         return (
           <Step
             status={item.status}

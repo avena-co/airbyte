@@ -27,17 +27,19 @@ import {
   SourceDefinition,
 } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
+import { Button } from "components";
 
 export enum StepsTypes {
   CREATE_ENTITY = "createEntity",
   CREATE_CONNECTOR = "createConnector",
-  CREATE_CONNECTION = "createConnection",
   CREATE_TRANSFORMATION = "createTransformation",
+  CREATE_CONNECTION = "createConnection",
 }
 
 export enum EntityStepsTypes {
   SOURCE = "source",
   DESTINATION = "destination",
+  TRANSFORMATION = "transformation",
   CONNECTION = "connection",
 }
 
@@ -130,6 +132,8 @@ const CreationFormPage: React.FC = () => {
       : EntityStepsTypes.SOURCE
   );
 
+  const [id, setId] = useState("");
+
   const {
     destinationDefinition,
     sourceDefinition,
@@ -149,6 +153,21 @@ const CreationFormPage: React.FC = () => {
   };
 
   const onSelectExistingDestination = (id: string) => {
+    setId(id);
+
+    push("", {
+      state: {
+        ...(location.state as Record<string, unknown>),
+        destinationId: id,
+      },
+    });
+    setCurrentEntityStep(EntityStepsTypes.TRANSFORMATION);
+
+    // changes title of page
+    setCurrentStep(StepsTypes.CREATE_TRANSFORMATION);
+  };
+
+  const onTransformClick = () => {
     push("", {
       state: {
         ...(location.state as Record<string, unknown>),
@@ -162,7 +181,8 @@ const CreationFormPage: React.FC = () => {
   const renderStep = () => {
     if (
       currentStep === StepsTypes.CREATE_ENTITY ||
-      currentStep === StepsTypes.CREATE_CONNECTOR
+      currentStep === StepsTypes.CREATE_CONNECTOR ||
+      currentStep === StepsTypes.CREATE_TRANSFORMATION
     ) {
       if (currentEntityStep === EntityStepsTypes.SOURCE) {
         return (
@@ -201,6 +221,14 @@ const CreationFormPage: React.FC = () => {
                 setCurrentStep(StepsTypes.CREATE_CONNECTION);
               }}
             />
+          </>
+        );
+      } else if (currentEntityStep === EntityStepsTypes.TRANSFORMATION) {
+        return (
+          <>
+            <Button onClick={onTransformClick} type="submit">
+              Submit
+            </Button>
           </>
         );
       }
