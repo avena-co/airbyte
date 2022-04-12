@@ -6,6 +6,7 @@ import { Connection } from "core/domain/connection";
 // components
 import SourceColumn from "./components/Source";
 import DestinationColumn from "./components/Destination";
+import QuickFixes from "./components/QuickFixes";
 import TransformationTitleAdjuster from "./TransformationTitleAdjuster";
 
 type IProps = {
@@ -55,6 +56,7 @@ const TransformationPage: React.FC<IProps> = ({
           <DestinationColumn data={data} onScroll={handleScroll} />
         </div>
       </ScrollSync>
+      <QuickFixes />
     </div>
   );
 };
