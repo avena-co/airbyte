@@ -1,11 +1,26 @@
 import React from "react";
 import { ScrollSync } from "scroll-sync-react";
+import { Destination, Source } from "core/domain/connector";
+import { Connection } from "core/domain/connection";
 
 // components
-import Source from "./components/Source";
-import Destination from "./components/Destination";
+import SourceColumn from "./components/Source";
+import DestinationColumn from "./components/Destination";
+import TransformationTitleAdjuster from "./TransformationTitleAdjuster";
 
-const TransformationPage: React.FC = () => {
+type IProps = {
+  source: Source;
+  destination: Destination;
+  onTransformClick: () => void;
+  afterSubmitConnection?: (connection: Connection) => void;
+};
+
+const TransformationPage: React.FC<IProps> = ({
+  source,
+  destination,
+  afterSubmitConnection,
+  onTransformClick,
+}) => {
   const data = {
     name: "Name",
     values: [
@@ -14,25 +29,11 @@ const TransformationPage: React.FC = () => {
       "Hakan",
       "Mehmet",
       "Muhammed",
-      "Metin",
-      "Hakan",
-      "Mehmet",
       "Muhammed",
       "Metin",
       "Hakan",
       "Mehmet",
       "Muhammed",
-      "Metin",
-      "Hakan",
-      "Mehmet",
-      "Muhammed",
-      "Metin",
-      "Hakan",
-      "Mehmet",
-      "Muhammed",
-      "Metin",
-      "Hakan",
-      "Mehmet",
     ],
   };
 
@@ -42,10 +43,16 @@ const TransformationPage: React.FC = () => {
 
   return (
     <div style={{ display: "flex" }}>
+      <TransformationTitleAdjuster
+        source={source}
+        destination={destination}
+        afterSubmitConnection={afterSubmitConnection}
+        onTransformClick={onTransformClick}
+      />
       <ScrollSync>
         <div style={{ display: "flex" }}>
-          <Source onScroll={handleScroll} data={data} />
-          <Destination data={data} onScroll={handleScroll} />
+          <SourceColumn onScroll={handleScroll} data={data} />
+          <DestinationColumn data={data} onScroll={handleScroll} />
         </div>
       </ScrollSync>
     </div>

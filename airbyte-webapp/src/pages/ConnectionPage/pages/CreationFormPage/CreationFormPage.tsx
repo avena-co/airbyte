@@ -29,7 +29,6 @@ import {
   SourceDefinition,
 } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
-import { Button } from "components";
 
 export enum StepsTypes {
   CREATE_ENTITY = "createEntity",
@@ -225,15 +224,6 @@ const CreationFormPage: React.FC = () => {
             />
           </>
         );
-      } else if (currentEntityStep === EntityStepsTypes.TRANSFORMATION) {
-        return (
-          <>
-            <TransformationPage />
-            <Button onClick={onTransformClick} type="submit">
-              Submit
-            </Button>
-          </>
-        );
       }
     }
 
@@ -254,6 +244,17 @@ const CreationFormPage: React.FC = () => {
     if (!source || !destination) {
       console.error("unexpected state met");
       return <LoadingPage />;
+    }
+
+    if (currentEntityStep === EntityStepsTypes.TRANSFORMATION) {
+      return (
+        <TransformationPage
+          source={source}
+          destination={destination}
+          afterSubmitConnection={afterSubmitConnection}
+          onTransformClick={onTransformClick}
+        />
+      );
     }
 
     return (
