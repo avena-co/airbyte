@@ -20,6 +20,8 @@ import SourceResource from "core/resources/Source";
 import DestinationResource from "core/resources/Destination";
 import DestinationDefinitionResource from "core/resources/DestinationDefinition";
 import SourceDefinitionResource from "core/resources/SourceDefinition";
+import TransformationPage from "../TransformationPage";
+
 import {
   Destination,
   DestinationDefinition,
@@ -226,6 +228,7 @@ const CreationFormPage: React.FC = () => {
       } else if (currentEntityStep === EntityStepsTypes.TRANSFORMATION) {
         return (
           <>
+            <TransformationPage />
             <Button onClick={onTransformClick} type="submit">
               Submit
             </Button>
@@ -303,7 +306,7 @@ const CreationFormPage: React.FC = () => {
     [EntityStepsTypes.DESTINATION]: "destinations.newDestinationTitle",
     [EntityStepsTypes.SOURCE]: "sources.newSourceTitle",
   } as Record<EntityStepsTypes, string>)[type];
-
+  console.log("currentStep", currentStep);
   return (
     <MainPageWithScroll
       headTitle={<HeadTitle titles={[{ id: titleId }]} />}
@@ -317,8 +320,14 @@ const CreationFormPage: React.FC = () => {
         />
       }
     >
-      <FormPageContent big={currentStep === StepsTypes.CREATE_CONNECTION}>
+      <FormPageContent
+        big={
+          currentStep === StepsTypes.CREATE_CONNECTION ||
+          currentStep === StepsTypes.CREATE_TRANSFORMATION
+        }
+      >
         {currentStep !== StepsTypes.CREATE_CONNECTION &&
+          currentStep !== StepsTypes.CREATE_TRANSFORMATION &&
           (!!source || !!destination) && (
             <ConnectionBlock
               itemFrom={
