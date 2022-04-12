@@ -19,15 +19,15 @@ const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
       <div className={styles.title}>{title}</div>
       <div className={styles.content}>
         <div className={styles.header_container}>
-          <div>&nbsp;</div>
+          <div className={styles.header_spacing}>&nbsp;</div>
           <div className={styles.header}>{data.name}</div>
         </div>
         <div className={styles.content_container}>
           {data.values?.map((el, index) => {
             return (
               <div onScroll={onScroll} className={styles.values} key={index}>
-                <div>{index + 1}</div>
-                <div>{el}</div>
+                <div className={styles.header_spacing}>{index + 1}</div>
+                <div className={styles.content_value}>{el}</div>
               </div>
             );
           })}
