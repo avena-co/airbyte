@@ -51,6 +51,7 @@
     "remark-gfm": "^3.0.0",
     "rest-hooks": "^5.0.20",
     "sanitize-html": "^2.7.0",
+    "scroll-sync-react": "^1.2.0",
     "styled-components": "^5.3.3",
     "typesafe-actions": "^5.1.0",
     "yup": "^0.32.11"

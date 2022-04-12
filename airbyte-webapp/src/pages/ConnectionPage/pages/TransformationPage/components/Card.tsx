@@ -1,4 +1,5 @@
 import React from "react";
+import { ScrollSyncNode } from "scroll-sync-react";
 
 import styles from "./card.module.css";
 
@@ -12,7 +13,7 @@ type CardProps = {
   data: Column;
   onScroll: (e: React.UIEvent<HTMLElement> | undefined) => void;
 };
-// data = { name: "", value: [{name: 'Name', value: [] }] }
+
 const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
   return (
     <div className={styles.container}>
@@ -22,16 +23,18 @@ const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
           <div className={styles.header_spacing}>&nbsp;</div>
           <div className={styles.header}>{data.name}</div>
         </div>
-        <div className={styles.content_container}>
-          {data.values?.map((el, index) => {
-            return (
-              <div onScroll={onScroll} className={styles.values} key={index}>
-                <div className={styles.header_spacing}>{index + 1}</div>
-                <div className={styles.content_value}>{el}</div>
-              </div>
-            );
-          })}
-        </div>
+        <ScrollSyncNode>
+          <div onScroll={onScroll} className={styles.content_container}>
+            {data.values?.map((el, index) => {
+              return (
+                <div className={styles.values} key={index}>
+                  <div className={styles.header_spacing}>{index + 1}</div>
+                  <div className={styles.content_value}>{el}</div>
+                </div>
+              );
+            })}
+          </div>
+        </ScrollSyncNode>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { ScrollSync } from "scroll-sync-react";
 
 // components
 import Source from "./components/Source";
@@ -7,7 +8,32 @@ import Destination from "./components/Destination";
 const TransformationPage: React.FC = () => {
   const data = {
     name: "Name",
-    values: ["Muhammed", "Metin", "Hakan", "Mehmet"],
+    values: [
+      "Muhammed",
+      "Metin",
+      "Hakan",
+      "Mehmet",
+      "Muhammed",
+      "Metin",
+      "Hakan",
+      "Mehmet",
+      "Muhammed",
+      "Metin",
+      "Hakan",
+      "Mehmet",
+      "Muhammed",
+      "Metin",
+      "Hakan",
+      "Mehmet",
+      "Muhammed",
+      "Metin",
+      "Hakan",
+      "Mehmet",
+      "Muhammed",
+      "Metin",
+      "Hakan",
+      "Mehmet",
+    ],
   };
 
   const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
@@ -16,8 +42,12 @@ const TransformationPage: React.FC = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <Source onScroll={handleScroll} data={data} />
-      <Destination data={data} onScroll={handleScroll} />
+      <ScrollSync>
+        <div style={{ display: "flex" }}>
+          <Source onScroll={handleScroll} data={data} />
+          <Destination data={data} onScroll={handleScroll} />
+        </div>
+      </ScrollSync>
     </div>
   );
 };
