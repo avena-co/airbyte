@@ -42,7 +42,7 @@ const TransformationPage: React.FC<IProps> = ({
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", height: "100%" }}>
       <TransformationTitleAdjuster
         source={source}
         destination={destination}

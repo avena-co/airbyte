@@ -13,6 +13,8 @@ import { Destination, Source } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
 import { Select } from "antd";
 
+import styles from "./transformation-adjuster.module.css";
+
 const SkipButton = styled.div`
   margin-top: 6px;
 
@@ -75,6 +77,7 @@ const TransformationTitleAdjuster: React.FC<IProps> = ({
 
   return (
     <ContentCard
+      className={styles.card_container}
       title={
         noTitles ? null : <FormattedMessage id="onboarding.setConnection" />
       }
