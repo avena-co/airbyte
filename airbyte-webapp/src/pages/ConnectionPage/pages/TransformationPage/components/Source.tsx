@@ -9,7 +9,7 @@ interface Column {
 }
 
 type SourceProps = {
-  data: Column;
+  data: Column[];
   onScroll: (e: React.UIEvent<HTMLElement> | undefined) => void;
 };
 

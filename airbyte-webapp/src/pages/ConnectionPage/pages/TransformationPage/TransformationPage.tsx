@@ -22,21 +22,56 @@ const TransformationPage: React.FC<IProps> = ({
   afterSubmitConnection,
   onTransformClick,
 }) => {
-  const data = {
-    name: "Name",
-    values: [
-      "Muhammed",
-      "Metin",
-      "Hakan",
-      "Mehmet",
-      "Muhammed",
-      "Muhammed",
-      "Metin",
-      "Hakan",
-      "Mehmet",
-      "Muhammed",
-    ],
-  };
+  const data = [
+    {
+      name: "Column1",
+      values: [
+        "Muhammed",
+        "Metin",
+        "Hakan",
+        "Mehmet",
+        "Muhammed",
+        "Muhammed",
+        "Metin",
+        "Hakan",
+        "Mehmet",
+        "Muhammed",
+      ],
+    },
+    {
+      name: "Column2",
+      values: [
+        "Muhammed1",
+        "Metin2",
+        "Hakan",
+        "Mehmet",
+        "Muhammed",
+        "Muhammed",
+        "Metin",
+        "Hakan",
+        "Mehmet",
+        "Muhammed",
+      ],
+    },
+    {
+      name: "Column3",
+      values: [
+        "Muhammed3",
+        "Metin4",
+        "Hakan",
+        "Mehmet",
+        "Muhammed",
+        "Muhammed",
+        "Metin",
+        "Hakan",
+        "Mehmet",
+        "Muhammed",
+        "Muhammed",
+        "Muhammed",
+        "Muhammed",
+      ],
+    },
+  ];
 
   const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
     console.log("e", e);

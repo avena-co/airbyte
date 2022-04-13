@@ -8,7 +8,7 @@ interface Column {
 }
 
 type DestinationProps = {
-  data: Column;
+  data: Column[];
   onScroll: (e: React.UIEvent<HTMLElement> | undefined) => void;
 };
 

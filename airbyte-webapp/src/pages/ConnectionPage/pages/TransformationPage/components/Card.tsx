@@ -10,29 +10,58 @@ interface Column {
 
 type CardProps = {
   title: string;
-  data: Column;
+  data: Column[];
   onScroll: (e: React.UIEvent<HTMLElement> | undefined) => void;
 };
 
 const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
+  const maxNum = data.reduce(function (previousValue, currentValue) {
+    if (previousValue < currentValue.values.length) {
+      return currentValue.values.length;
+    }
+    return previousValue;
+  }, 0);
+  console.log(maxNum);
   return (
     <div className={styles.container}>
       <div className={styles.title}>{title}</div>
       <div className={styles.content}>
         <div className={styles.header_container}>
           <div className={styles.header_spacing}>&nbsp;</div>
-          <div className={styles.header}>{data.name}</div>
+          {data.map((el, ind) => {
+            console.log(el);
+            return <div className={styles.header}>{data[ind].name}</div>;
+          })}
         </div>
         <ScrollSyncNode>
           <div onScroll={onScroll} className={styles.content_container}>
-            {data.values?.map((el, index) => {
+            {[...Array(maxNum)].map((el, ind) => {
+              console.log(el);
               return (
-                <div className={styles.values} key={index}>
-                  <div className={styles.header_spacing}>{index + 1}</div>
-                  <div className={styles.content_value}>{el}</div>
+                <div className={styles.values}>
+                  {data.map((d, index) => {
+                    if (index === 0) {
+                      return (
+                        <>
+                          <div className={styles.header_spacing}>{ind + 1}</div>
+                          <div className={styles.content_value}>
+                            {d.values[ind]}
+                          </div>
+                        </>
+                      );
+                    } else {
+                      return (
+                        <div className={styles.content_value}>
+                          {d.values[ind]}
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               );
             })}
+            {/* 
+            <div className={styles.content_value}>{el}</div> */}
           </div>
         </ScrollSyncNode>
       </div>
