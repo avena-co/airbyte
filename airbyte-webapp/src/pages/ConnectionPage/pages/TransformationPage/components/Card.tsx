@@ -21,7 +21,7 @@ const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
     }
     return previousValue;
   }, 0);
-  console.log(maxNum);
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>{title}</div>
@@ -29,8 +29,11 @@ const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
         <div className={styles.header_container}>
           <div className={styles.header_spacing}>&nbsp;</div>
           {data.map((el, ind) => {
-            console.log(el);
-            return <div className={styles.header}>{data[ind].name}</div>;
+            return (
+              <div key={ind} className={styles.header}>
+                {el?.name}
+              </div>
+            );
           })}
         </div>
         <ScrollSyncNode>
@@ -60,7 +63,7 @@ const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
                 </div>
               );
             })}
-            {/* 
+            {/*
             <div className={styles.content_value}>{el}</div> */}
           </div>
         </ScrollSyncNode>

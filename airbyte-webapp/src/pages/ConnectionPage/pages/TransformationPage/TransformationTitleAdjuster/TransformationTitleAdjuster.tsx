@@ -110,7 +110,6 @@ const TransformationTitleAdjuster: React.FC<IProps> = ({
                     </div>
                     {Object.keys(properties ? properties : {}).map(
                       (property) => {
-                        console.log(property);
                         return (
                           <div
                             style={{
