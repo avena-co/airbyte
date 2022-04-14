@@ -29,6 +29,7 @@ type IProps = {
   source: Source;
   destination: Destination;
   onTransformClick: () => void;
+  onSelectCard: (cardIDs: Array<String>, name: String) => void;
   afterSubmitConnection?: (connection: Connection) => void;
   noTitles?: boolean;
 };
@@ -36,6 +37,7 @@ type IProps = {
 const TransformationTitleAdjuster: React.FC<IProps> = ({
   source,
   destination,
+  onSelectCard,
   onTransformClick,
   additionBottomControls,
   noTitles,
@@ -134,8 +136,9 @@ const TransformationTitleAdjuster: React.FC<IProps> = ({
                                 mode="multiple"
                                 allowClear
                                 style={{ width: "200px" }}
+                                onChange={(e) => onSelectCard(e, property)}
                                 placeholder="Please select"
-                                defaultValue={[property]}
+                                // defaultValue={[property]}
                               >
                                 {Object.keys(properties ? properties : {}).map(
                                   (property) => (

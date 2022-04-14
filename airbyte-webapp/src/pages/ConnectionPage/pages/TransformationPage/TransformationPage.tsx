@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollSync } from "scroll-sync-react";
 import { Destination, Source } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
@@ -16,6 +16,11 @@ type IProps = {
   afterSubmitConnection?: (connection: Connection) => void;
 };
 
+interface Column {
+  name: string;
+  values: string[];
+}
+
 const TransformationPage: React.FC<IProps> = ({
   source,
   destination,
@@ -24,7 +29,7 @@ const TransformationPage: React.FC<IProps> = ({
 }) => {
   const data = [
     {
-      name: "Column1",
+      name: "name",
       values: [
         "Muhammed",
         "Metin",
@@ -39,9 +44,9 @@ const TransformationPage: React.FC<IProps> = ({
       ],
     },
     {
-      name: "Column2",
+      name: "merchants",
       values: [
-        "Muhammed1",
+        "Dilekçi",
         "Metin2",
         "Hakan",
         "Mehmet",
@@ -54,25 +59,39 @@ const TransformationPage: React.FC<IProps> = ({
       ],
     },
     {
-      name: "Column3",
+      name: "id",
       values: [
-        "Muhammed3",
-        "Metin4",
-        "Hakan",
-        "Mehmet",
-        "Muhammed",
-        "Muhammed",
-        "Metin",
-        "Hakan",
-        "Mehmet",
-        "Muhammed",
-        "Muhammed",
-        "Muhammed",
-        "Muhammed",
+        "3021",
+        "3025",
+        "2053",
+        "2466",
+        "4355",
+        "6436",
+        "5363",
+        "2344",
+        "4656",
+        "3523",
       ],
     },
   ];
+  const [sourceData, setSourceData] = useState<Column[]>([
+    {
+      name: "",
+      values: [],
+    },
+  ]);
+  const [destinationData, setDestinationData] = useState<Column[]>([
+    {
+      name: "",
+      values: [],
+    },
+  ]);
 
+  const onSelectCard = (cardIDs: Array<Object>, name: String) => {
+    console.log(name);
+    setSourceData(data.filter((el) => cardIDs.includes(el.name)));
+    setDestinationData(data.filter((el) => name === el.name));
+  };
   const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
     console.log("e", e);
   };
@@ -84,11 +103,12 @@ const TransformationPage: React.FC<IProps> = ({
         destination={destination}
         afterSubmitConnection={afterSubmitConnection}
         onTransformClick={onTransformClick}
+        onSelectCard={onSelectCard}
       />
       <ScrollSync>
         <div style={{ display: "flex" }}>
-          <SourceColumn onScroll={handleScroll} data={data} />
-          <DestinationColumn data={data} onScroll={handleScroll} />
+          <SourceColumn onScroll={handleScroll} data={sourceData} />
+          <DestinationColumn data={destinationData} onScroll={handleScroll} />
         </div>
       </ScrollSync>
       <QuickFixes />
