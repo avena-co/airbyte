@@ -24,13 +24,6 @@ const QuickFixes: React.FC = () => {
       label: "Skip if value = Empty or null",
       operation: "skipEmpty",
     },
-    {
-      id: 3,
-      type: "fixError",
-      label: "If there is a QuickFix error...",
-      operation: "",
-      value: "",
-    },
   ]);
 
   const handleOptionClicked = (data: Option): void => {
