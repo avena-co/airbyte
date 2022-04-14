@@ -10,8 +10,8 @@ interface Option {
 }
 
 const QuickFixes: React.FC = () => {
-  const [selecteds] = useState<Option[] | undefined[]>([]);
-  const [options] = useState<Option[]>([
+  const [selecteds, setSelecteds] = useState<Option[]>([]);
+  const [options, setOptions] = useState<Option[]>([
     {
       id: 1,
       type: "general",
@@ -33,8 +33,40 @@ const QuickFixes: React.FC = () => {
     },
   ]);
 
+  const handleOptionClicked = (data: Option): void => {
+    const index = selecteds.findIndex((el) => el.id === data.id);
+
+    if (index < 0) {
+      setSelecteds((prevState) => [...prevState, data]);
+      setOptions((prevState) => prevState.filter((el) => el.id !== data.id));
+    }
+  };
+
+  const handleSelectedClicked = (data: Option): void => {
+    const index = options.findIndex((el) => el.id === data.id);
+
+    if (index < 0) {
+      setOptions((prevState) => [...prevState, data]);
+      setSelecteds((prevState) => prevState.filter((el) => el.id !== data.id));
+    }
+  };
+
   const renderSelectedOptions = () => {
-    return <div></div>;
+    return (
+      <div>
+        {selecteds.map((el) => {
+          return (
+            <div
+              onClick={() => handleSelectedClicked(el)}
+              key={el.id}
+              className={styles.action}
+            >
+              {el.label}
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
@@ -50,7 +82,7 @@ const QuickFixes: React.FC = () => {
           {options.map((el) => {
             return (
               <div
-                onClick={() => console.log("selecteds", selecteds)}
+                onClick={() => handleOptionClicked(el)}
                 key={el.id}
                 className={styles.action}
               >
