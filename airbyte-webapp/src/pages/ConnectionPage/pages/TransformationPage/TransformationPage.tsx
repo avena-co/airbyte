@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollSync } from "scroll-sync-react";
 import { Destination, Source } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
@@ -53,7 +53,7 @@ const TransformationPage: React.FC<IProps> = ({
         "Thomas",
         "Joseph",
         "David",
-        "Karen",
+        "",
         "Nancy",
         "Matthew",
         "Steven",
@@ -146,6 +146,14 @@ const TransformationPage: React.FC<IProps> = ({
       values: [],
     },
   ]);
+  const [originalDestinationData, setOriginalDestinationData] = useState<
+    Column[]
+  >([
+    {
+      name: "",
+      values: [],
+    },
+  ]);
 
   const [selectedActions, setSelectedActions] = useState<Option[]>([]);
   const [generalActions, setGeneralActions] = useState<Option[]>([
@@ -164,8 +172,10 @@ const TransformationPage: React.FC<IProps> = ({
   ]);
 
   const onSelectCard = (cardIDs: Array<Object>, name: String) => {
-    setSourceData(data.filter((el) => cardIDs.includes(el.name)));
+    const sourceData = data.filter((el) => cardIDs.includes(el.name));
+    setSourceData(sourceData);
     setDestinationData(data.filter((el) => name === el.name));
+    setOriginalDestinationData(data.filter((el) => name === el.name));
   };
   const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
     console.log("e", e);
@@ -181,6 +191,28 @@ const TransformationPage: React.FC<IProps> = ({
       );
     }
   };
+
+  useEffect(() => {
+    let destinationData = [...originalDestinationData];
+    selectedActions.forEach((el) => {
+      if (el.operation === "toLowerCase") {
+        destinationData = destinationData.map((el) => {
+          return {
+            name: el.name,
+            values: el.values.map((value) => value.toLowerCase()),
+          };
+        });
+      } else if (el.operation === "skipEmpty") {
+        destinationData = destinationData.map((el) => {
+          return {
+            name: el.name,
+            values: el.values.filter((value) => value !== ""),
+          };
+        });
+      }
+    });
+    setDestinationData(destinationData);
+  }, [selectedActions]);
 
   const onSelectedActionClicked = (data: Option): void => {
     const index = generalActions.findIndex((el) => el.id === data.id);
