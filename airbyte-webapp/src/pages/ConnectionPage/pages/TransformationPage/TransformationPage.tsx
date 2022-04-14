@@ -41,7 +41,7 @@ const TransformationPage: React.FC<IProps> = ({
       values: [
         "James",
         "Robert",
-        "Jennifer",
+        "",
         "Michael",
         "Mary",
         "William",
@@ -65,7 +65,7 @@ const TransformationPage: React.FC<IProps> = ({
       values: [
         "Smith",
         "Thomas",
-        "Clark",
+        "",
         "Lewis",
         "Rodriguez",
         "Davis",
@@ -89,7 +89,7 @@ const TransformationPage: React.FC<IProps> = ({
       values: [
         "29",
         "27",
-        "30",
+        "",
         "34",
         "41",
         "34",
@@ -113,7 +113,7 @@ const TransformationPage: React.FC<IProps> = ({
       values: [
         "Marketing Director",
         "Supervisor",
-        "Receptionist",
+        "",
         "Data Entry",
         "Director",
         "Human Resources",
@@ -172,10 +172,123 @@ const TransformationPage: React.FC<IProps> = ({
   ]);
 
   const onSelectCard = (cardIDs: Array<Object>, name: String) => {
-    const sourceData = data.filter((el) => cardIDs.includes(el.name));
+    const newData = [
+      {
+        name: "Firstname",
+        values: [
+          "James",
+          "Robert",
+          "",
+          "Michael",
+          "Mary",
+          "William",
+          "Patricia",
+          "John",
+          "Elizabeth",
+          "Barbara",
+          "Susan",
+          "Thomas",
+          "Joseph",
+          "David",
+          "",
+          "Nancy",
+          "Matthew",
+          "Steven",
+          "Kimberly",
+        ],
+      },
+      {
+        name: "Lastname",
+        values: [
+          "Smith",
+          "Thomas",
+          "",
+          "Lewis",
+          "Rodriguez",
+          "Davis",
+          "Lopez",
+          "Gonzales",
+          "Martinez",
+          "Hernandez",
+          "Moore",
+          "Garcia",
+          "Perez",
+          "Walker",
+          "Scott",
+          "Torres",
+          "Hall",
+          "Diaz",
+          "Cox",
+        ],
+      },
+      {
+        name: "Age",
+        values: [
+          "29",
+          "27",
+          "",
+          "34",
+          "41",
+          "34",
+          "28",
+          "38",
+          "36",
+          "39",
+          "25",
+          "40",
+          "38",
+          "41",
+          "36",
+          "42",
+          "29",
+          "37",
+          "39",
+        ],
+      },
+      {
+        name: "Job",
+        values: [
+          "Marketing Director",
+          "Supervisor",
+          "",
+          "Data Entry",
+          "Director",
+          "Human Resources",
+          "Copywriter",
+          "Help Desk",
+          "Data Entry",
+          "Painter",
+          "Cashier",
+          "Computer Scientist",
+          "Plumber",
+          "Customer Service",
+          "Sales Engineer",
+          "CEO",
+          "Scrum Master",
+          "Managing Partner",
+          "Finance Director",
+        ],
+      },
+    ];
+    const sourceData = newData.filter((el) => cardIDs.includes(el.name));
     setSourceData(sourceData);
-    setDestinationData(data.filter((el) => name === el.name));
-    setOriginalDestinationData(data.filter((el) => name === el.name));
+    const newSource = [...sourceData];
+    const destination = [...data].filter((el) => name === el.name);
+    const destinationValues = destination[0].values.map((el, ind) => {
+      console.log(el);
+      let value = "";
+      newSource.forEach((val) => {
+        if (value === "") {
+          value = val.values[ind];
+        } else {
+          value = `${value}, ${val.values[ind]}`;
+        }
+      });
+      return value;
+    });
+    destination[0].values = destinationValues;
+    setDestinationData(destination);
+    setOriginalDestinationData(destination);
   };
   const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
     console.log("e", e);
