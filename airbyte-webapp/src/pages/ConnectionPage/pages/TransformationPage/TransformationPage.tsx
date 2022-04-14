@@ -16,6 +16,14 @@ type IProps = {
   afterSubmitConnection?: (connection: Connection) => void;
 };
 
+interface Option {
+  id: number;
+  type: string;
+  label: string;
+  operation: string;
+  value?: string;
+}
+
 interface Column {
   name: string;
   values: string[];
@@ -125,6 +133,7 @@ const TransformationPage: React.FC<IProps> = ({
       ],
     },
   ];
+
   const [sourceData, setSourceData] = useState<Column[]>([
     {
       name: "",
@@ -138,13 +147,50 @@ const TransformationPage: React.FC<IProps> = ({
     },
   ]);
 
+  const [selectedActions, setSelectedActions] = useState<Option[]>([]);
+  const [generalActions, setGeneralActions] = useState<Option[]>([
+    {
+      id: 1,
+      type: "general",
+      label: "Convert to lower case",
+      operation: "toLowerCase",
+    },
+    {
+      id: 2,
+      type: "general",
+      label: "Skip if value = Empty or null",
+      operation: "skipEmpty",
+    },
+  ]);
+
   const onSelectCard = (cardIDs: Array<Object>, name: String) => {
-    console.log(name);
     setSourceData(data.filter((el) => cardIDs.includes(el.name)));
     setDestinationData(data.filter((el) => name === el.name));
   };
   const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
     console.log("e", e);
+  };
+
+  const onActionClicked = (data: Option): void => {
+    const index = selectedActions.findIndex((el) => el.id === data.id);
+
+    if (index < 0) {
+      setSelectedActions((prevState) => [...prevState, data]);
+      setGeneralActions((prevState) =>
+        prevState.filter((el) => el.id !== data.id)
+      );
+    }
+  };
+
+  const onSelectedActionClicked = (data: Option): void => {
+    const index = generalActions.findIndex((el) => el.id === data.id);
+
+    if (index < 0) {
+      setGeneralActions((prevState) => [...prevState, data]);
+      setSelectedActions((prevState) =>
+        prevState.filter((el) => el.id !== data.id)
+      );
+    }
   };
 
   return (
@@ -162,7 +208,12 @@ const TransformationPage: React.FC<IProps> = ({
           <DestinationColumn data={destinationData} onScroll={handleScroll} />
         </div>
       </ScrollSync>
-      <QuickFixes />
+      <QuickFixes
+        actions={generalActions}
+        selectedActions={selectedActions}
+        onActionClicked={onActionClicked}
+        onSelectedActionClicked={onSelectedActionClicked}
+      />
     </div>
   );
 };

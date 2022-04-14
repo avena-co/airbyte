@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./quick-fixes.module.css";
-
 interface Option {
   id: number;
   type: string;
@@ -9,48 +8,26 @@ interface Option {
   value?: string;
 }
 
-const QuickFixes: React.FC = () => {
-  const [selecteds, setSelecteds] = useState<Option[]>([]);
-  const [options, setOptions] = useState<Option[]>([
-    {
-      id: 1,
-      type: "general",
-      label: "Convert to lower case",
-      operation: "toLowerCase",
-    },
-    {
-      id: 2,
-      type: "general",
-      label: "Skip if value = Empty or null",
-      operation: "skipEmpty",
-    },
-  ]);
+type IProps = {
+  actions: Option[];
+  selectedActions: Option[];
+  onActionClicked: (data: Option) => void;
+  onSelectedActionClicked: (data: Option) => void;
+};
 
-  const handleOptionClicked = (data: Option): void => {
-    const index = selecteds.findIndex((el) => el.id === data.id);
-
-    if (index < 0) {
-      setSelecteds((prevState) => [...prevState, data]);
-      setOptions((prevState) => prevState.filter((el) => el.id !== data.id));
-    }
-  };
-
-  const handleSelectedClicked = (data: Option): void => {
-    const index = options.findIndex((el) => el.id === data.id);
-
-    if (index < 0) {
-      setOptions((prevState) => [...prevState, data]);
-      setSelecteds((prevState) => prevState.filter((el) => el.id !== data.id));
-    }
-  };
-
+const QuickFixes: React.FC<IProps> = ({
+  actions,
+  selectedActions,
+  onActionClicked,
+  onSelectedActionClicked,
+}) => {
   const renderSelectedOptions = () => {
     return (
       <div>
-        {selecteds.map((el) => {
+        {selectedActions.map((el) => {
           return (
             <div
-              onClick={() => handleSelectedClicked(el)}
+              onClick={() => onSelectedActionClicked(el)}
               key={el.id}
               className={styles.action}
             >
@@ -72,10 +49,10 @@ const QuickFixes: React.FC = () => {
         </div>
         <div className={styles.section}>
           <div className={styles.section_header_2}>GENERAL</div>
-          {options.map((el) => {
+          {actions.map((el) => {
             return (
               <div
-                onClick={() => handleOptionClicked(el)}
+                onClick={() => onActionClicked(el)}
                 key={el.id}
                 className={styles.action}
               >
