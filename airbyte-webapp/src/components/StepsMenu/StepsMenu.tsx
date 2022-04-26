@@ -33,18 +33,20 @@ const StepsMenu: React.FC<IProps> = ({
 }) => {
   return (
     <Content>
-      {data.map((item, key) => (
-        <Step
-          status={item.status}
-          isPartialSuccess={item.isPartialSuccess}
-          lightMode={lightMode}
-          key={item.id}
-          num={key + 1}
-          {...item}
-          onClick={item.onSelect || onSelect}
-          isActive={activeStep === item.id}
-        />
-      ))}
+      {data.map((item, key) => {
+        return (
+          <Step
+            status={item.status}
+            isPartialSuccess={item.isPartialSuccess}
+            lightMode={lightMode}
+            key={item.id}
+            num={key + 1}
+            {...item}
+            onClick={item.onSelect || onSelect}
+            isActive={activeStep === item.id}
+          />
+        );
+      })}
     </Content>
   );
 };

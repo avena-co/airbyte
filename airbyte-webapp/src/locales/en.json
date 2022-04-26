@@ -191,6 +191,7 @@
   "onboarding.sourceSetUp": "Set up the source",
   "onboarding.sourceSetUp.buttonText": "Set up source",
   "onboarding.createDestination": "Create a destination",
+  "onboarding.createTransformation": "Transformation",
   "onboarding.destinationSetUp": "Set up the destination",
   "onboarding.destinationSetUp.buttonText": "Set up destination",
   "onboarding.setUpConnection": "Set up connection",

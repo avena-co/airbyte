@@ -24,6 +24,7 @@
     "@rest-hooks/legacy": "^2.0.5",
     "@sentry/react": "^6.17.9",
     "@sentry/tracing": "^6.17.9",
+    "antd": "^4.19.5",
     "dayjs": "^1.10.7",
     "firebase": "^9.6.7",
     "flat": "^5.0.2",
@@ -51,6 +52,7 @@
     "remark-gfm": "^3.0.0",
     "rest-hooks": "^5.0.20",
     "sanitize-html": "^2.7.0",
+    "scroll-sync-react": "^1.2.0",
     "styled-components": "^5.3.3",
     "typesafe-actions": "^5.1.0",
     "yup": "^0.32.11"
@@ -88,6 +90,7 @@
     "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^4.2.3",
     "license-checker": "^25.0.1",
     "lint-staged": "^12.3.4",

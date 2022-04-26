@@ -20,6 +20,8 @@ import SourceResource from "core/resources/Source";
 import DestinationResource from "core/resources/Destination";
 import DestinationDefinitionResource from "core/resources/DestinationDefinition";
 import SourceDefinitionResource from "core/resources/SourceDefinition";
+import TransformationPage from "../TransformationPage";
+
 import {
   Destination,
   DestinationDefinition,
@@ -31,12 +33,14 @@ import { Connection } from "core/domain/connection";
 export enum StepsTypes {
   CREATE_ENTITY = "createEntity",
   CREATE_CONNECTOR = "createConnector",
+  CREATE_TRANSFORMATION = "createTransformation",
   CREATE_CONNECTION = "createConnection",
 }
 
 export enum EntityStepsTypes {
   SOURCE = "source",
   DESTINATION = "destination",
+  TRANSFORMATION = "transformation",
   CONNECTION = "connection",
 }
 
@@ -129,6 +133,8 @@ const CreationFormPage: React.FC = () => {
       : EntityStepsTypes.SOURCE
   );
 
+  const [id, setId] = useState("");
+
   const {
     destinationDefinition,
     sourceDefinition,
@@ -148,6 +154,21 @@ const CreationFormPage: React.FC = () => {
   };
 
   const onSelectExistingDestination = (id: string) => {
+    setId(id);
+
+    push("", {
+      state: {
+        ...(location.state as Record<string, unknown>),
+        destinationId: id,
+      },
+    });
+    setCurrentEntityStep(EntityStepsTypes.TRANSFORMATION);
+
+    // changes title of page
+    setCurrentStep(StepsTypes.CREATE_TRANSFORMATION);
+  };
+
+  const onTransformClick = () => {
     push("", {
       state: {
         ...(location.state as Record<string, unknown>),
@@ -161,7 +182,8 @@ const CreationFormPage: React.FC = () => {
   const renderStep = () => {
     if (
       currentStep === StepsTypes.CREATE_ENTITY ||
-      currentStep === StepsTypes.CREATE_CONNECTOR
+      currentStep === StepsTypes.CREATE_CONNECTOR ||
+      currentStep === StepsTypes.CREATE_TRANSFORMATION
     ) {
       if (currentEntityStep === EntityStepsTypes.SOURCE) {
         return (
@@ -224,6 +246,17 @@ const CreationFormPage: React.FC = () => {
       return <LoadingPage />;
     }
 
+    if (currentEntityStep === EntityStepsTypes.TRANSFORMATION) {
+      return (
+        <TransformationPage
+          source={source}
+          destination={destination}
+          afterSubmitConnection={afterSubmitConnection}
+          onTransformClick={onTransformClick}
+        />
+      );
+    }
+
     return (
       <CreateConnectionContent
         source={source}
@@ -243,6 +276,10 @@ const CreationFormPage: React.FC = () => {
           {
             id: StepsTypes.CREATE_CONNECTOR,
             name: <FormattedMessage id="onboarding.createDestination" />,
+          },
+          {
+            id: StepsTypes.CREATE_TRANSFORMATION,
+            name: <FormattedMessage id="onboarding.createTransformation" />,
           },
           {
             id: StepsTypes.CREATE_CONNECTION,
@@ -270,7 +307,7 @@ const CreationFormPage: React.FC = () => {
     [EntityStepsTypes.DESTINATION]: "destinations.newDestinationTitle",
     [EntityStepsTypes.SOURCE]: "sources.newSourceTitle",
   } as Record<EntityStepsTypes, string>)[type];
-
+  console.log("currentStep", currentStep);
   return (
     <MainPageWithScroll
       headTitle={<HeadTitle titles={[{ id: titleId }]} />}
@@ -284,8 +321,14 @@ const CreationFormPage: React.FC = () => {
         />
       }
     >
-      <FormPageContent big={currentStep === StepsTypes.CREATE_CONNECTION}>
+      <FormPageContent
+        big={
+          currentStep === StepsTypes.CREATE_CONNECTION ||
+          currentStep === StepsTypes.CREATE_TRANSFORMATION
+        }
+      >
         {currentStep !== StepsTypes.CREATE_CONNECTION &&
+          currentStep !== StepsTypes.CREATE_TRANSFORMATION &&
           (!!source || !!destination) && (
             <ConnectionBlock
               itemFrom={

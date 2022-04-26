@@ -27,6 +27,8 @@ import {
 } from "./config";
 import { WorkspaceServiceProvider } from "./services/workspaces/WorkspacesService";
 
+import "antd/dist/antd.css";
+
 const StyleProvider: React.FC = ({ children }) => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
