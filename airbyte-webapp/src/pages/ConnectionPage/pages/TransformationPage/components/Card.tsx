@@ -11,10 +11,9 @@ interface Column {
 type CardProps = {
   title: string;
   data: Column[];
-  onScroll: (e: React.UIEvent<HTMLElement> | undefined) => void;
 };
 
-const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
+const Card: React.FC<CardProps> = ({ title, data }) => {
   const maxNum = data.reduce(function (previousValue, currentValue) {
     if (previousValue < currentValue.values.length) {
       return currentValue.values.length;
@@ -37,7 +36,7 @@ const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
           })}
         </div>
         <ScrollSyncNode>
-          <div onScroll={onScroll} className={styles.content_container}>
+          <div className={styles.content_container}>
             {[...Array(maxNum)].map((el, ind) => {
               console.log(el);
               return (

@@ -9,13 +9,12 @@ interface Column {
 
 type DestinationProps = {
   data: Column[];
-  onScroll: (e: React.UIEvent<HTMLElement> | undefined) => void;
 };
 
-const Destination: React.FC<DestinationProps> = ({ data, onScroll }) => {
+const Destination: React.FC<DestinationProps> = ({ data }) => {
   return (
     <div>
-      <Card onScroll={onScroll} title="Destination" data={data} />
+      <Card title="Destination" data={data} />
     </div>
   );
 };

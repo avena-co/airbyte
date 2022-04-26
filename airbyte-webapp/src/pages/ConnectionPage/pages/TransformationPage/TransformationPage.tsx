@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ScrollSync } from "scroll-sync-react";
 import { Destination, Source } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
@@ -22,6 +22,7 @@ interface Option {
   label: string;
   operation: string;
   value?: string;
+  selected?: boolean;
 }
 
 interface Column {
@@ -29,111 +30,111 @@ interface Column {
   values: string[];
 }
 
+const data = [
+  {
+    name: "oldData",
+    values: [
+      "James",
+      "Robert",
+      "",
+      "Michael",
+      "Mary",
+      "William",
+      "Patricia",
+      "John",
+      "Elizabeth",
+      "Barbara",
+      "Susan",
+      "Thomas",
+      "Joseph",
+      "David",
+      "",
+      "Nancy",
+      "Matthew",
+      "Steven",
+      "Kimberly",
+    ],
+  },
+  {
+    name: "createdAt",
+    values: [
+      "Smith",
+      "Thomas",
+      "",
+      "Lewis",
+      "Rodriguez",
+      "Davis",
+      "Lopez",
+      "Gonzales",
+      "Martinez",
+      "Hernandez",
+      "Moore",
+      "Garcia",
+      "Perez",
+      "Walker",
+      "Scott",
+      "Torres",
+      "Hall",
+      "Diaz",
+      "Cox",
+    ],
+  },
+  {
+    name: "shortId",
+    values: [
+      "29",
+      "27",
+      "",
+      "34",
+      "41",
+      "34",
+      "28",
+      "38",
+      "36",
+      "39",
+      "25",
+      "40",
+      "38",
+      "41",
+      "36",
+      "42",
+      "29",
+      "37",
+      "39",
+    ],
+  },
+  {
+    name: "__v",
+    values: [
+      "Marketing Director",
+      "Supervisor",
+      "",
+      "Data Entry",
+      "Director",
+      "Human Resources",
+      "Copywriter",
+      "Help Desk",
+      "Data Entry",
+      "Painter",
+      "Cashier",
+      "Computer Scientist",
+      "Plumber",
+      "Customer Service",
+      "Sales Engineer",
+      "CEO",
+      "Scrum Master",
+      "Managing Partner",
+      "Finance Director",
+    ],
+  },
+];
+
 const TransformationPage: React.FC<IProps> = ({
   source,
   destination,
   afterSubmitConnection,
   onTransformClick,
 }) => {
-  const data = [
-    {
-      name: "Firstname",
-      values: [
-        "James",
-        "Robert",
-        "",
-        "Michael",
-        "Mary",
-        "William",
-        "Patricia",
-        "John",
-        "Elizabeth",
-        "Barbara",
-        "Susan",
-        "Thomas",
-        "Joseph",
-        "David",
-        "",
-        "Nancy",
-        "Matthew",
-        "Steven",
-        "Kimberly",
-      ],
-    },
-    {
-      name: "Lastname",
-      values: [
-        "Smith",
-        "Thomas",
-        "",
-        "Lewis",
-        "Rodriguez",
-        "Davis",
-        "Lopez",
-        "Gonzales",
-        "Martinez",
-        "Hernandez",
-        "Moore",
-        "Garcia",
-        "Perez",
-        "Walker",
-        "Scott",
-        "Torres",
-        "Hall",
-        "Diaz",
-        "Cox",
-      ],
-    },
-    {
-      name: "Age",
-      values: [
-        "29",
-        "27",
-        "",
-        "34",
-        "41",
-        "34",
-        "28",
-        "38",
-        "36",
-        "39",
-        "25",
-        "40",
-        "38",
-        "41",
-        "36",
-        "42",
-        "29",
-        "37",
-        "39",
-      ],
-    },
-    {
-      name: "Job",
-      values: [
-        "Marketing Director",
-        "Supervisor",
-        "",
-        "Data Entry",
-        "Director",
-        "Human Resources",
-        "Copywriter",
-        "Help Desk",
-        "Data Entry",
-        "Painter",
-        "Cashier",
-        "Computer Scientist",
-        "Plumber",
-        "Customer Service",
-        "Sales Engineer",
-        "CEO",
-        "Scrum Master",
-        "Managing Partner",
-        "Finance Director",
-      ],
-    },
-  ];
-
   const [sourceData, setSourceData] = useState<Column[]>([
     {
       name: "",
@@ -155,125 +156,35 @@ const TransformationPage: React.FC<IProps> = ({
     },
   ]);
 
-  const [selectedActions, setSelectedActions] = useState<Option[]>([]);
   const [generalActions, setGeneralActions] = useState<Option[]>([
     {
       id: 1,
       type: "general",
       label: "Convert to lower case",
       operation: "toLowerCase",
+      selected: false,
     },
     {
       id: 2,
       type: "general",
       label: "Skip if value = Empty or null",
       operation: "skipEmpty",
+      selected: false,
+    },
+    {
+      id: 3,
+      type: "quickFixErrors",
+      label: "IF THERE IS A QUICK FIX ERROR...",
+      operation: "quickFixError",
+      selected: false,
     },
   ]);
 
   const onSelectCard = (cardIDs: Array<Object>, name: String) => {
-    const newData = [
-      {
-        name: "Firstname",
-        values: [
-          "James",
-          "Robert",
-          "",
-          "Michael",
-          "Mary",
-          "William",
-          "Patricia",
-          "John",
-          "Elizabeth",
-          "Barbara",
-          "Susan",
-          "Thomas",
-          "Joseph",
-          "David",
-          "",
-          "Nancy",
-          "Matthew",
-          "Steven",
-          "Kimberly",
-        ],
-      },
-      {
-        name: "Lastname",
-        values: [
-          "Smith",
-          "Thomas",
-          "",
-          "Lewis",
-          "Rodriguez",
-          "Davis",
-          "Lopez",
-          "Gonzales",
-          "Martinez",
-          "Hernandez",
-          "Moore",
-          "Garcia",
-          "Perez",
-          "Walker",
-          "Scott",
-          "Torres",
-          "Hall",
-          "Diaz",
-          "Cox",
-        ],
-      },
-      {
-        name: "Age",
-        values: [
-          "29",
-          "27",
-          "",
-          "34",
-          "41",
-          "34",
-          "28",
-          "38",
-          "36",
-          "39",
-          "25",
-          "40",
-          "38",
-          "41",
-          "36",
-          "42",
-          "29",
-          "37",
-          "39",
-        ],
-      },
-      {
-        name: "Job",
-        values: [
-          "Marketing Director",
-          "Supervisor",
-          "",
-          "Data Entry",
-          "Director",
-          "Human Resources",
-          "Copywriter",
-          "Help Desk",
-          "Data Entry",
-          "Painter",
-          "Cashier",
-          "Computer Scientist",
-          "Plumber",
-          "Customer Service",
-          "Sales Engineer",
-          "CEO",
-          "Scrum Master",
-          "Managing Partner",
-          "Finance Director",
-        ],
-      },
-    ];
-    const sourceData = newData.filter((el) => cardIDs.includes(el.name));
+    const sourceData = data.filter((el) => cardIDs.includes(el.name));
     setSourceData(sourceData);
     const newSource = [...sourceData];
-    const destination = [...data].filter((el) => name === el.name);
+    const destination = data.filter((el) => name === el.name);
     const destinationValues = destination[0].values.map((el, ind) => {
       console.log(el);
       let value = "";
@@ -290,54 +201,21 @@ const TransformationPage: React.FC<IProps> = ({
     setDestinationData(destination);
     setOriginalDestinationData(destination);
   };
-  const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
-    console.log("e", e);
-  };
 
   const onActionClicked = (data: Option): void => {
-    const index = selectedActions.findIndex((el) => el.id === data.id);
-
-    if (index < 0) {
-      setSelectedActions((prevState) => [...prevState, data]);
-      setGeneralActions((prevState) =>
-        prevState.filter((el) => el.id !== data.id)
-      );
-    }
-  };
-
-  useEffect(() => {
-    let destinationData = [...originalDestinationData];
-    selectedActions.forEach((el) => {
-      if (el.operation === "toLowerCase") {
-        destinationData = destinationData.map((el) => {
+    setGeneralActions((prevState) =>
+      prevState.map((el) => {
+        if (el.id === data.id) {
           return {
-            name: el.name,
-            values: el.values.map((value) => value.toLowerCase()),
+            ...el,
+            selected: !el.selected,
           };
-        });
-      } else if (el.operation === "skipEmpty") {
-        destinationData = destinationData.map((el) => {
-          return {
-            name: el.name,
-            values: el.values.filter((value) => value !== ""),
-          };
-        });
-      }
-    });
-    setDestinationData(destinationData);
-  }, [selectedActions]);
-
-  const onSelectedActionClicked = (data: Option): void => {
-    const index = generalActions.findIndex((el) => el.id === data.id);
-
-    if (index < 0) {
-      setGeneralActions((prevState) => [...prevState, data]);
-      setSelectedActions((prevState) =>
-        prevState.filter((el) => el.id !== data.id)
-      );
-    }
+        }
+        return el;
+      })
+    );
   };
-
+  console.log("first", originalDestinationData);
   return (
     <div style={{ display: "flex", height: "100%" }}>
       <TransformationTitleAdjuster
@@ -349,16 +227,11 @@ const TransformationPage: React.FC<IProps> = ({
       />
       <ScrollSync>
         <div style={{ display: "flex" }}>
-          <SourceColumn onScroll={handleScroll} data={sourceData} />
-          <DestinationColumn data={destinationData} onScroll={handleScroll} />
+          <SourceColumn data={sourceData} />
+          <DestinationColumn data={destinationData} />
         </div>
       </ScrollSync>
-      <QuickFixes
-        actions={generalActions}
-        selectedActions={selectedActions}
-        onActionClicked={onActionClicked}
-        onSelectedActionClicked={onSelectedActionClicked}
-      />
+      <QuickFixes actions={generalActions} onActionClicked={onActionClicked} />
     </div>
   );
 };

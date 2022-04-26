@@ -10,13 +10,12 @@ interface Column {
 
 type SourceProps = {
   data: Column[];
-  onScroll: (e: React.UIEvent<HTMLElement> | undefined) => void;
 };
 
-const Source: React.FC<SourceProps> = ({ data, onScroll }) => {
+const Source: React.FC<SourceProps> = ({ data }) => {
   return (
     <div>
-      <Card title="Source" onScroll={onScroll} data={data} />
+      <Card title="Source" data={data} />
     </div>
   );
 };

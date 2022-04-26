@@ -6,38 +6,31 @@ interface Option {
   label: string;
   operation: string;
   value?: string;
+  selected?: boolean;
 }
 
 type IProps = {
   actions: Option[];
-  selectedActions: Option[];
   onActionClicked: (data: Option) => void;
-  onSelectedActionClicked: (data: Option) => void;
 };
 
-const QuickFixes: React.FC<IProps> = ({
-  actions,
-  selectedActions,
-  onActionClicked,
-  onSelectedActionClicked,
-}) => {
-  const renderSelectedOptions = () => {
-    return (
-      <div>
-        {selectedActions.map((el) => {
-          return (
-            <div
-              onClick={() => onSelectedActionClicked(el)}
-              key={el.id}
-              className={styles.action}
-            >
-              {el.label}
-            </div>
-          );
-        })}
-      </div>
-    );
+const QuickFixes: React.FC<IProps> = ({ actions, onActionClicked }) => {
+  const handleSelectChange = (e: any) => {
+    if (onActionClicked) {
+      const data = actions.find((el) => el.type === "quickFixErrors");
+      if (data) {
+        data.operation = e.target.value;
+        onActionClicked(data);
+      }
+    }
   };
+
+  const renderActions = actions.filter(
+    (el) => !el.selected && el.type !== "quickFixErrors"
+  );
+
+  const renderSelectedActions = actions.filter((el) => el.selected);
+  const quickFixAction = actions.find((el) => el.type === "quickFixErrors");
 
   return (
     <div className={styles.container}>
@@ -45,11 +38,21 @@ const QuickFixes: React.FC<IProps> = ({
       <div className={styles.content}>
         <div className={styles.section}>
           <div className={styles.section_header}>Quick Fixes</div>
-          <div>{renderSelectedOptions()}</div>
+          {renderSelectedActions.map((el) => {
+            return (
+              <div
+                onClick={() => onActionClicked(el)}
+                key={el.id}
+                className={styles.action}
+              >
+                {el.label}
+              </div>
+            );
+          })}
         </div>
         <div className={styles.section}>
           <div className={styles.section_header_2}>GENERAL</div>
-          {actions.map((el) => {
+          {renderActions.map((el) => {
             return (
               <div
                 onClick={() => onActionClicked(el)}
@@ -63,16 +66,18 @@ const QuickFixes: React.FC<IProps> = ({
         </div>
         <div className={styles.section}>
           <div className={styles.section_header_2}>QUICKFIX ERRORS</div>
-          <select className={styles.action}>
-            <option value="" selected={true} hidden={true}>
-              If there is a QuickFix error...
-            </option>
-            <option value="ignoreError">Ignore error</option>
-            <option value="skipRow">Skip row</option>
-            <option value="fillCellWithCustomValue">
-              Fill cell with custom value
-            </option>
-          </select>
+          {!quickFixAction?.selected && (
+            <select onChange={handleSelectChange} className={styles.action}>
+              <option value="" selected={true} hidden={true}>
+                If there is a QuickFix error...
+              </option>
+              <option value="ignoreError">Ignore error</option>
+              <option value="skipRow">Skip row</option>
+              <option value="fillCellWithCustomValue">
+                Fill cell with custom value
+              </option>
+            </select>
+          )}
         </div>
       </div>
     </div>
