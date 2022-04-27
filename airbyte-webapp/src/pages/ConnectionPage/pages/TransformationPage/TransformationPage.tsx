@@ -172,15 +172,15 @@ const TransformationPage: React.FC<IProps> = ({
     },
   ]);
   const permutator = (cardIDs: Array<String>) => {
-    let result: Array<String>[] = [];
+    const result: Array<String>[] = [];
 
     const permute = (arr: Array<String>, m: Array<String> = []) => {
       if (arr.length === 0) {
         result.push(m);
       } else {
         for (let i = 0; i < arr.length; i++) {
-          let curr = arr.slice();
-          let next = curr.splice(i, 1);
+          const curr = arr.slice();
+          const next = curr.splice(i, 1);
           permute(curr.slice(), m.concat(next));
         }
       }
@@ -357,7 +357,7 @@ const TransformationPage: React.FC<IProps> = ({
     selectedActions.forEach((el) => {
       if (el.operation === "quickFix") {
         const splittedLabels = el.label?.split(", ");
-        let values = [];
+        const values = [];
         for (let i = 0; i < destinationData[0].values.length; i++) {
           let value = "";
           splittedLabels?.forEach((el) => {
