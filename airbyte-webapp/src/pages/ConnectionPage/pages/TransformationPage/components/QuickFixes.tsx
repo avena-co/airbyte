@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./quick-fixes.module.css";
+import { Input, Button } from "antd";
 interface Option {
   id: number;
   type: string;
@@ -15,14 +16,40 @@ type IProps = {
 };
 
 const QuickFixes: React.FC<IProps> = ({ actions, onActionClicked }) => {
+  const [
+    customValueInputVisible,
+    setCustomValueInputVisible,
+  ] = useState<boolean>(false);
+  const [customValue, setCustomValue] = useState<string>("");
+
   const handleSelectChange = (e: any) => {
-    if (onActionClicked) {
-      const data = actions.find((el) => el.type === "quickFixErrors");
-      if (data) {
-        data.operation = e.target.value;
-        data.label = data.label.replace("...", ", ");
+    const action = e.target.value;
+    const data = actions.find((el) => el.type === "quickFixErrors");
+    if (data && action !== "fillCellWithCustomValue") {
+      data.operation = action;
+      data.label = data.label.replace("...", ", ");
+
+      if (onActionClicked) {
         onActionClicked(data);
       }
+      setCustomValueInputVisible(false);
+    }
+
+    if (action === "fillCellWithCustomValue") {
+      setCustomValueInputVisible(true);
+    }
+  };
+
+  const handleAddCustomValueClick = () => {
+    const data = actions.find((el) => el.type === "quickFixErrors");
+    if (data) {
+      data.operation = "fillCellWithCustomValue";
+      data.label = data.label.replace("...", ", ");
+
+      if (onActionClicked) {
+        onActionClicked(data);
+      }
+      setCustomValueInputVisible(false);
     }
   };
 
@@ -53,7 +80,7 @@ const QuickFixes: React.FC<IProps> = ({ actions, onActionClicked }) => {
                       ? "skip row"
                       : el.operation === "ignoreError"
                       ? "ignore error"
-                      : "fill cell with custom value"}
+                      : `fill cell with: ${customValue}`}
                   </span>
                 )}
               </div>
@@ -81,19 +108,28 @@ const QuickFixes: React.FC<IProps> = ({ actions, onActionClicked }) => {
               <option value="" selected={true} hidden={true}>
                 If there is a QuickFix error...
               </option>
-              <option id="ignore error" value="ignoreError">
-                Ignore error
-              </option>
-              <option id="skip row" value="skipRow">
-                Skip row
-              </option>
-              <option
-                id="fill cell with custom value"
-                value="fillCellWithCustomValue"
-              >
+              <option value="ignoreError"> Ignore error </option>
+              <option value="skipRow"> Skip row </option>
+              <option value="fillCellWithCustomValue">
                 Fill cell with custom value
               </option>
             </select>
+          )}
+          {customValueInputVisible && (
+            <div>
+              <Input
+                style={{ marginBottom: "8px" }}
+                placeholder="Provide value"
+                type="text"
+                onChange={(e) => setCustomValue(e.target.value)}
+              />
+              <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", flex: "1 1 0px" }} />
+                <Button onClick={handleAddCustomValueClick} type="primary">
+                  APPLY QUICKFIX
+                </Button>
+              </div>
+            </div>
           )}
         </div>
       </div>
