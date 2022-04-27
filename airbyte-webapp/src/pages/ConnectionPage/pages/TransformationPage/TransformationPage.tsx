@@ -174,7 +174,7 @@ const TransformationPage: React.FC<IProps> = ({
     {
       id: 3,
       type: "quickFixErrors",
-      label: "IF THERE IS A QUICK FIX ERROR...",
+      label: "If there is a QuickFix error...",
       operation: "quickFixError",
       selected: false,
     },

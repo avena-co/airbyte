@@ -20,6 +20,7 @@ const QuickFixes: React.FC<IProps> = ({ actions, onActionClicked }) => {
       const data = actions.find((el) => el.type === "quickFixErrors");
       if (data) {
         data.operation = e.target.value;
+        data.label = data.label.replace("...", ", ");
         onActionClicked(data);
       }
     }
@@ -46,6 +47,15 @@ const QuickFixes: React.FC<IProps> = ({ actions, onActionClicked }) => {
                 className={styles.action}
               >
                 {el.label}
+                {el.type === "quickFixErrors" && (
+                  <span>
+                    {el.operation === "skipRow"
+                      ? "skip row"
+                      : el.operation === "ignoreError"
+                      ? "ignore error"
+                      : "fill cell with custom value"}
+                  </span>
+                )}
               </div>
             );
           })}
@@ -71,9 +81,16 @@ const QuickFixes: React.FC<IProps> = ({ actions, onActionClicked }) => {
               <option value="" selected={true} hidden={true}>
                 If there is a QuickFix error...
               </option>
-              <option value="ignoreError">Ignore error</option>
-              <option value="skipRow">Skip row</option>
-              <option value="fillCellWithCustomValue">
+              <option id="ignore error" value="ignoreError">
+                Ignore error
+              </option>
+              <option id="skip row" value="skipRow">
+                Skip row
+              </option>
+              <option
+                id="fill cell with custom value"
+                value="fillCellWithCustomValue"
+              >
                 Fill cell with custom value
               </option>
             </select>
