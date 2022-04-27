@@ -1,14 +1,15 @@
 import React from "react";
 import styles from "./quick-fixes.module.css";
 interface Option {
-  id: number;
-  type: string;
-  label: string;
-  operation: string;
+  id?: number;
+  type?: string;
+  label?: string;
+  operation?: string;
   value?: string;
 }
 
 type IProps = {
+  cardIDs: Array<String>;
   actions: Option[];
   selectedActions: Option[];
   onActionClicked: (data: Option) => void;
@@ -16,6 +17,7 @@ type IProps = {
 };
 
 const QuickFixes: React.FC<IProps> = ({
+  // cardIDs,
   actions,
   selectedActions,
   onActionClicked,

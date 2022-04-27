@@ -17,10 +17,10 @@ type IProps = {
 };
 
 interface Option {
-  id: number;
-  type: string;
-  label: string;
-  operation: string;
+  id?: number;
+  type?: string;
+  label?: string;
+  operation?: string;
   value?: string;
 }
 
@@ -140,6 +140,7 @@ const TransformationPage: React.FC<IProps> = ({
       values: [],
     },
   ]);
+  const [cardIDs, setCardIDs] = useState<Array<String>>([]);
   const [destinationData, setDestinationData] = useState<Column[]>([
     {
       name: "",
@@ -170,8 +171,27 @@ const TransformationPage: React.FC<IProps> = ({
       operation: "skipEmpty",
     },
   ]);
+  const permutator = (cardIDs: Array<String>) => {
+    let result: Array<String>[] = [];
 
-  const onSelectCard = (cardIDs: Array<Object>, name: String) => {
+    const permute = (arr: Array<String>, m: Array<String> = []) => {
+      if (arr.length === 0) {
+        result.push(m);
+      } else {
+        for (let i = 0; i < arr.length; i++) {
+          let curr = arr.slice();
+          let next = curr.splice(i, 1);
+          permute(curr.slice(), m.concat(next));
+        }
+      }
+    };
+
+    permute(cardIDs);
+
+    return result;
+  };
+  const onSelectCard = (cardIDs: Array<String>, name: String) => {
+    setCardIDs(cardIDs);
     const newData = [
       {
         name: "Firstname",
@@ -275,7 +295,7 @@ const TransformationPage: React.FC<IProps> = ({
     const newSource = [...sourceData];
     const destination = [...data].filter((el) => name === el.name);
     const destinationValues = destination[0].values.map((el, ind) => {
-      console.log(el);
+      if (!el) console.log(el);
       let value = "";
       newSource.forEach((val) => {
         if (value === "") {
@@ -289,15 +309,42 @@ const TransformationPage: React.FC<IProps> = ({
     destination[0].values = destinationValues;
     setDestinationData(destination);
     setOriginalDestinationData(destination);
+
+    const newGeneral = permutator(cardIDs).map((el, ind) => {
+      return {
+        id: ind + 3,
+        type: "general",
+        operation: "quickFix",
+        label: el.join(", "),
+      };
+    });
+
+    setGeneralActions(newGeneral);
   };
   const handleScroll = (e: React.UIEvent<HTMLElement> | undefined): void => {
-    console.log("e", e);
+    if (!e) console.log("e", e);
   };
 
   const onActionClicked = (data: Option): void => {
     const index = selectedActions.findIndex((el) => el.id === data.id);
-
-    if (index < 0) {
+    console.log(data);
+    if (data.operation === "quickFix") {
+      setSelectedActions([data]);
+      setGeneralActions([
+        {
+          id: 1,
+          type: "general",
+          label: "Convert to lower case",
+          operation: "toLowerCase",
+        },
+        {
+          id: 2,
+          type: "general",
+          label: "Skip if value = Empty or null",
+          operation: "skipEmpty",
+        },
+      ]);
+    } else if (index < 0) {
       setSelectedActions((prevState) => [...prevState, data]);
       setGeneralActions((prevState) =>
         prevState.filter((el) => el.id !== data.id)
@@ -308,6 +355,30 @@ const TransformationPage: React.FC<IProps> = ({
   useEffect(() => {
     let destinationData = [...originalDestinationData];
     selectedActions.forEach((el) => {
+      if (el.operation === "quickFix") {
+        const splittedLabels = el.label?.split(", ");
+        let values = [];
+        for (let i = 0; i < destinationData[0].values.length; i++) {
+          let value = "";
+          splittedLabels?.forEach((el) => {
+            const valueRow = [...data].find((ele) => el === ele.name)?.values[
+              i
+            ];
+            if (value === "") {
+              value = `${valueRow}`;
+            } else {
+              value = `${value}, ${valueRow}`;
+            }
+          });
+          values.push(value);
+        }
+        destinationData = [
+          {
+            name: destinationData[0].name,
+            values,
+          },
+        ];
+      }
       if (el.operation === "toLowerCase") {
         destinationData = destinationData.map((el) => {
           return {
@@ -330,7 +401,19 @@ const TransformationPage: React.FC<IProps> = ({
   const onSelectedActionClicked = (data: Option): void => {
     const index = generalActions.findIndex((el) => el.id === data.id);
 
-    if (index < 0) {
+    if (data.operation === "quickFix") {
+      setSelectedActions([]);
+      const newGeneral = permutator(cardIDs).map((el, ind) => {
+        return {
+          id: ind + 3,
+          type: "general",
+          operation: "quickFix",
+          label: el.join(", "),
+        };
+      });
+
+      setGeneralActions(newGeneral);
+    } else if (index < 0) {
       setGeneralActions((prevState) => [...prevState, data]);
       setSelectedActions((prevState) =>
         prevState.filter((el) => el.id !== data.id)
@@ -354,6 +437,7 @@ const TransformationPage: React.FC<IProps> = ({
         </div>
       </ScrollSync>
       <QuickFixes
+        cardIDs={cardIDs}
         actions={generalActions}
         selectedActions={selectedActions}
         onActionClicked={onActionClicked}

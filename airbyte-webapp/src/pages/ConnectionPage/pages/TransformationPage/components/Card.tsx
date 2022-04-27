@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = ({ title, data, onScroll }) => {
         <ScrollSyncNode>
           <div onScroll={onScroll} className={styles.content_container}>
             {[...Array(maxNum)].map((el, ind) => {
-              console.log(el);
+              if (el) console.log(el);
               return (
                 <div className={styles.values}>
                   {data.map((d, index) => {
