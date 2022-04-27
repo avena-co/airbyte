@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollSync } from "scroll-sync-react";
 import { Destination, Source } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
@@ -215,7 +215,32 @@ const TransformationPage: React.FC<IProps> = ({
       })
     );
   };
-  console.log("first", originalDestinationData);
+
+  useEffect(() => {
+    let updatedDestinationData = originalDestinationData;
+
+    const selectedActions = generalActions.filter((el) => el.selected);
+
+    for (const action of selectedActions) {
+      if (action.operation === "toLowerCase") {
+        updatedDestinationData = updatedDestinationData.map((data) => {
+          return {
+            ...data,
+            values: data.values.map((el) => el.toLowerCase()),
+          };
+        });
+      } else if (action.operation === "skipEmpty") {
+        updatedDestinationData = updatedDestinationData.map((data) => {
+          return {
+            ...data,
+            values: data.values.filter((el) => !!el),
+          };
+        });
+      }
+    }
+    setDestinationData(updatedDestinationData);
+  }, [generalActions, originalDestinationData]);
+
   return (
     <div style={{ display: "flex", height: "100%" }}>
       <TransformationTitleAdjuster
