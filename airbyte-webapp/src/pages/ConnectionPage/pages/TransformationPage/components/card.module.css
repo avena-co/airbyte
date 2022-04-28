@@ -10,6 +10,8 @@
   line-height: 1.42857143;
   color: #333;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -28,6 +30,8 @@
   margin-left: 8px;
   margin-right: 8px;
   margin-bottom: 10px;
+  flex: 1 1 0px;
+  height: 100%;
 }
 
 .header_container {
@@ -41,7 +45,7 @@
 }
 
 .header_spacing {
-  height: 24px;
+  height: 100%;
   width: 32px;
   border-right: 1px solid lightgray;
   display: flex;
@@ -60,8 +64,8 @@
 .content_container {
   display: flex;
   flex-direction: column;
-  height: 320px;
   overflow: scroll;
+  height: 100%;
 }
 
 .values {
