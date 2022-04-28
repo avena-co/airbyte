@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ScrollSync } from "scroll-sync-react";
 import { Destination, Source } from "core/domain/connector";
 import { Connection } from "core/domain/connection";
@@ -54,105 +54,6 @@ const defaultActions = [
   },
 ];
 
-const data = [
-  {
-    name: "oldData",
-    values: [
-      "James",
-      "Robert",
-      "",
-      "Michael",
-      "Mary",
-      "William",
-      "Patricia",
-      "John",
-      "Elizabeth",
-      "Barbara",
-      "Susan",
-      "Thomas",
-      "Joseph",
-      "David",
-      "",
-      "Nancy",
-      "Matthew",
-      "Steven",
-      "Kimberly",
-    ],
-  },
-  {
-    name: "createdAt",
-    values: [
-      "Smith",
-      "Thomas",
-      "",
-      "Lewis",
-      "Rodriguez",
-      "Davis",
-      "Lopez",
-      "Gonzales",
-      "Martinez",
-      "Hernandez",
-      "Moore",
-      "Garcia",
-      "Perez",
-      "Walker",
-      "Scott",
-      "Torres",
-      "Hall",
-      "Diaz",
-      "Cox",
-    ],
-  },
-  {
-    name: "shortId",
-    values: [
-      "29",
-      "27",
-      "",
-      "34",
-      "41",
-      "34",
-      "28",
-      "38",
-      "36",
-      "39",
-      "25",
-      "40",
-      "38",
-      "41",
-      "36",
-      "42",
-      "29",
-      "37",
-      "39",
-    ],
-  },
-  {
-    name: "__v",
-    values: [
-      "Marketing Director",
-      "Supervisor",
-      "",
-      "Data Entry",
-      "Director",
-      "Human Resources",
-      "Copywriter",
-      "Help Desk",
-      "Data Entry",
-      "Painter",
-      "Cashier",
-      "Computer Scientist",
-      "Plumber",
-      "Customer Service",
-      "Sales Engineer",
-      "CEO",
-      "Scrum Master",
-      "Managing Partner",
-      "Finance Director",
-    ],
-  },
-];
-
 const TransformationPage: React.FC<IProps> = ({
   source,
   destination,
@@ -168,12 +69,6 @@ const TransformationPage: React.FC<IProps> = ({
 
   const [cardIDs, setCardIDs] = useState<String[]>([]);
 
-  const [destinationData, setDestinationData] = useState<Column[]>([
-    {
-      name: "",
-      values: [],
-    },
-  ]);
   const [originalDestinationData, setOriginalDestinationData] = useState<
     Column[]
   >([
@@ -182,6 +77,112 @@ const TransformationPage: React.FC<IProps> = ({
       values: [],
     },
   ]);
+
+  const [destinationData, setDestinationData] = useState<Column[]>([
+    {
+      name: "",
+      values: [],
+    },
+  ]);
+
+  const data = [
+    {
+      name: "Firstname",
+      values: [
+        "James",
+        "Robert",
+        "",
+        "Michael",
+        "Mary",
+        "William",
+        "Patricia",
+        "John",
+        "Elizabeth",
+        "Barbara",
+        "Susan",
+        "Thomas",
+        "Joseph",
+        "David",
+        "",
+        "Nancy",
+        "Matthew",
+        "Steven",
+        "Kimberly",
+      ],
+    },
+    {
+      name: "Lastname",
+      values: [
+        "Smith",
+        "Thomas",
+        "",
+        "Lewis",
+        "Rodriguez",
+        "Davis",
+        "Lopez",
+        "Gonzales",
+        "Martinez",
+        "Hernandez",
+        "Moore",
+        "Garcia",
+        "Perez",
+        "Walker",
+        "Scott",
+        "Torres",
+        "Hall",
+        "Diaz",
+        "Cox",
+      ],
+    },
+    {
+      name: "Age",
+      values: [
+        "29",
+        "27",
+        "",
+        "34",
+        "41",
+        "34",
+        "28",
+        "38",
+        "36",
+        "39",
+        "25",
+        "40",
+        "38",
+        "41",
+        "36",
+        "42",
+        "29",
+        "37",
+        "39",
+      ],
+    },
+    {
+      name: "Job",
+      values: [
+        "Marketing Director",
+        "Supervisor",
+        "",
+        "Data Entry",
+        "Director",
+        "Human Resources",
+        "Copywriter",
+        "Help Desk",
+        "Data Entry",
+        "Painter",
+        "Cashier",
+        "Computer Scientist",
+        "Plumber",
+        "Customer Service",
+        "Sales Engineer",
+        "CEO",
+        "Scrum Master",
+        "Managing Partner",
+        "Finance Director",
+      ],
+    },
+  ];
 
   const [generalActions, setGeneralActions] = useState<Option[]>(
     defaultActions
@@ -211,38 +212,15 @@ const TransformationPage: React.FC<IProps> = ({
     const sourceData = data.filter((el) => cardIDs.includes(el.name));
     setSourceData(sourceData);
     setCardIDs(cardIDs);
-    const destination = data.filter((el) => name === el.name);
-    const destinationValues = destination[0].values.map((el, ind) => {
-      console.log(el);
-      let value = "";
-      sourceData.forEach((val) => {
-        if (value === "") {
-          value = val.values[ind];
-        } else {
-          value = `${value}, ${val.values[ind]}`;
-        }
-      });
-      return value;
-    });
-    destination[0].values = destinationValues;
-    setDestinationData(destination);
-    setOriginalDestinationData(destination);
 
-    const newGeneral = permutator(cardIDs).map((el, ind) => {
-      return {
-        id: ind + 3,
-        type: "general",
-        operation: "quickFix",
-        selected: false,
-        label: el.join(", "),
-      };
-    });
-
-    setGeneralActions(newGeneral);
-  };
-
-  const onActionClicked = (data: Option): void => {
-    if (data.operation === "quickFix" && data.selected) {
+    if (cardIDs.length === 1) {
+      const destination = data.filter((el) => name === el.name);
+      setGeneralActions(defaultActions);
+      setDestinationData(destination);
+      setOriginalDestinationData(destination);
+    } else {
+      setDestinationData([{ name: `${name}`, values: [] }]);
+      setOriginalDestinationData([{ name: `${name}`, values: [] }]);
       const newGeneral = permutator(cardIDs).map((el, ind) => {
         return {
           id: ind + 3,
@@ -253,71 +231,102 @@ const TransformationPage: React.FC<IProps> = ({
         };
       });
       setGeneralActions(newGeneral);
-    } else if (data.operation === "quickFix" && !data.selected) {
-      setGeneralActions([...defaultActions, { ...data, selected: true }]);
-    } else {
-      setGeneralActions((prevState) =>
-        prevState.map((el) => {
-          if (el.id === data.id) {
-            return {
-              ...el,
-              selected: !el.selected,
-            };
-          }
-          return el;
-        })
-      );
     }
   };
 
-  useEffect(() => {
+  const handleCardItemClick = (data: any, index: number): void => {
+    console.log("data", data);
+    console.log("index", index);
+  };
+
+  const onActionClicked = (val: Option): void => {
+    let newActions: Option[] = [];
+    if (val.operation === "quickFix" && val.selected) {
+      newActions = permutator(cardIDs).map((el, ind) => {
+        return {
+          id: ind + 3,
+          type: "general",
+          operation: "quickFix",
+          selected: false,
+          label: el.join(", "),
+        };
+      });
+    } else if (val.operation === "quickFix" && !val.selected) {
+      newActions = [...defaultActions, { ...val, selected: true }];
+    } else {
+      newActions = generalActions.map((el) => {
+        if (el.id === val.id) {
+          return {
+            ...el,
+            selected: !el.selected,
+          };
+        }
+        return el;
+      });
+    }
+    setGeneralActions(newActions);
+
+    // modify destination data
     let updatedDestinationData = originalDestinationData;
 
-    const selectedActions = generalActions.filter((el) => el.selected);
+    const selectedActions = newActions?.filter((el) => el.selected);
 
-    for (const action of selectedActions) {
-      if (action.operation === "quickFix") {
-        const splittedLabels = action.label?.split(", ");
-        const values = [];
-        for (let i = 0; i < updatedDestinationData[0].values.length; i++) {
-          let value = "";
-          splittedLabels?.forEach((el) => {
-            const valueRow = [...data].find((ele) => el === ele.name)?.values[
-              i
-            ];
-            if (value === "") {
-              value = `${valueRow}`;
-            } else {
-              value = `${value}, ${valueRow}`;
-            }
-          });
-          values.push(value);
-        }
-        updatedDestinationData = [
-          {
-            name: destinationData[0].name,
-            values,
-          },
-        ];
-      }
-      if (action.operation === "toLowerCase") {
-        updatedDestinationData = updatedDestinationData.map((data) => {
-          return {
-            ...data,
-            values: data.values.map((el) => el.toLowerCase()),
-          };
+    const quickFixIndex = selectedActions.findIndex(
+      (action) => action.operation === "quickFix"
+    );
+
+    const lowerCaseIndex = selectedActions.findIndex(
+      (action) => action.operation === "toLowerCase"
+    );
+
+    const skipEmptyIndex = selectedActions.findIndex(
+      (action) => action.operation === "skipEmpty"
+    );
+
+    if (quickFixIndex >= 0) {
+      const action = selectedActions[quickFixIndex];
+      const splittedLabels = action.label?.split(", ");
+      const values = [];
+      for (let i = 0; i < sourceData[0].values.length; i++) {
+        let value = "";
+        splittedLabels?.forEach((el) => {
+          const valueRow = [...data].find((ele) => el === ele.name)?.values[i];
+          if (value === "") {
+            value = `${valueRow}`;
+          } else {
+            value = `${value}, ${valueRow}`;
+          }
         });
-      } else if (action.operation === "skipEmpty") {
-        updatedDestinationData = updatedDestinationData.map((data) => {
-          return {
-            ...data,
-            values: data.values.filter((el) => !!el),
-          };
-        });
+        values.push(value);
       }
+      updatedDestinationData = [
+        {
+          name: destinationData[0].name,
+          values,
+        },
+      ];
     }
+
+    if (lowerCaseIndex >= 0) {
+      updatedDestinationData = updatedDestinationData.map((data) => {
+        return {
+          ...data,
+          values: data.values.map((el) => el.toLowerCase()),
+        };
+      });
+    }
+
+    if (skipEmptyIndex >= 0) {
+      updatedDestinationData = updatedDestinationData.map((data) => {
+        return {
+          ...data,
+          values: data.values.filter((el) => !!el),
+        };
+      });
+    }
+
     setDestinationData(updatedDestinationData);
-  }, [generalActions, originalDestinationData]);
+  };
 
   return (
     <div style={{ display: "flex", height: "100%" }}>
@@ -330,8 +339,14 @@ const TransformationPage: React.FC<IProps> = ({
       />
       <ScrollSync>
         <div style={{ display: "flex" }}>
-          <SourceColumn data={sourceData} />
-          <DestinationColumn data={destinationData} />
+          <SourceColumn
+            onCardItemClick={handleCardItemClick}
+            data={sourceData}
+          />
+          <DestinationColumn
+            onCardItemClick={handleCardItemClick}
+            data={destinationData}
+          />
         </div>
       </ScrollSync>
       <QuickFixes actions={generalActions} onActionClicked={onActionClicked} />

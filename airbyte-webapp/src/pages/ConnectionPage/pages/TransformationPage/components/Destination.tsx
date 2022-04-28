@@ -9,12 +9,13 @@ interface Column {
 
 type DestinationProps = {
   data: Column[];
+  onCardItemClick: (data: any, index: number) => void;
 };
 
-const Destination: React.FC<DestinationProps> = ({ data }) => {
+const Destination: React.FC<DestinationProps> = ({ data, onCardItemClick }) => {
   return (
     <div>
-      <Card title="Destination" data={data} />
+      <Card onCardItemClick={onCardItemClick} title="Destination" data={data} />
     </div>
   );
 };

@@ -10,12 +10,13 @@ interface Column {
 
 type SourceProps = {
   data: Column[];
+  onCardItemClick: (data: any, index: number) => void;
 };
 
-const Source: React.FC<SourceProps> = ({ data }) => {
+const Source: React.FC<SourceProps> = ({ data, onCardItemClick }) => {
   return (
     <div>
-      <Card title="Source" data={data} />
+      <Card onCardItemClick={onCardItemClick} title="Source" data={data} />
     </div>
   );
 };

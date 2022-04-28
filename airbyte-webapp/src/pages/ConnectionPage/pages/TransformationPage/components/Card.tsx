@@ -11,15 +11,26 @@ interface Column {
 type CardProps = {
   title: string;
   data: Column[];
+  onCardItemClick: (data: any, index: number) => void;
 };
 
-const Card: React.FC<CardProps> = ({ title, data }) => {
+const Card: React.FC<CardProps> = ({ title, data, onCardItemClick }) => {
   const maxNum = data.reduce(function (previousValue, currentValue) {
     if (previousValue < currentValue.values.length) {
       return currentValue.values.length;
     }
     return previousValue;
   }, 0);
+
+  const handleMouseEnter = (e: any): void => {
+    const domElement = e.target;
+    domElement.style.background = "rgb(152, 198, 255)";
+  };
+
+  const handleMouseLeave = (e: any): void => {
+    const domElement = e.target;
+    domElement.style.background = "white";
+  };
 
   return (
     <div className={styles.container}>
@@ -46,7 +57,12 @@ const Card: React.FC<CardProps> = ({ title, data }) => {
                       return (
                         <>
                           <div className={styles.header_spacing}>{ind + 1}</div>
-                          <div className={styles.content_value}>
+                          <div
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={() => onCardItemClick(d, index)}
+                            className={styles.content_value}
+                          >
                             {d.values[ind]}
                           </div>
                         </>
