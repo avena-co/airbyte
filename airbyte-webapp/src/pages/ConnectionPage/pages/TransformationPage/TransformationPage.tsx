@@ -6,7 +6,7 @@ import { Connection } from "core/domain/connection";
 // components
 import SourceColumn from "./components/Source";
 import DestinationColumn from "./components/Destination";
-import QuickFixes from "./components/QuickFixes";
+import ActionColumns from "./components/ActionColumns/ActionColumns";
 import TransformationTitleAdjuster from "./TransformationTitleAdjuster";
 
 type IProps = {
@@ -373,7 +373,10 @@ const TransformationPage: React.FC<IProps> = ({
           />
         </div>
       </ScrollSync>
-      <QuickFixes actions={generalActions} onActionClicked={onActionClicked} />
+      <ActionColumns
+        actions={generalActions}
+        onActionClicked={onActionClicked}
+      />
     </div>
   );
 };

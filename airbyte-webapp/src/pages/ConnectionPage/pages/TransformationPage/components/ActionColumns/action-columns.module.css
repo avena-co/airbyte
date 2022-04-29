@@ -12,6 +12,14 @@
   color: #333;
   min-height: 100%;
   height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.quick_fixes {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0px;
 }
 
 .title {
@@ -28,6 +36,7 @@
 
 .content {
   margin: 8px;
+  flex: 1;
 }
 
 .section {
@@ -90,4 +99,45 @@
 
 .action:hover {
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+.quick_fix_buttons {
+  margin: 18px;
+  border-top: 1px solid rgb(229, 229, 229);
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.seperator {
+  font-weight: 500;
+  font-size: 15px;
+  color: rgb(153, 153, 153);
+}
+
+.quick_fix_button {
+  padding: 5px 15px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.75;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  letter-spacing: 0.25px;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  -moz-appearance: none;
+  text-decoration: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  height: 36px;
+  background: #fed503;
+  color: white;
+  font-weight: 400;
+  font-size: 16px;
+  border: 1px solid;
+  border-radius: 4px;
 }
