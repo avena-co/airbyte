@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./action-columns.module.css";
+import AdvancedFormulas from "./AdvancedFormulas";
 
 // components
 import QuickFixes from "./QuickFixes";
@@ -45,15 +46,7 @@ const ActionColumns: React.FC<IProps> = ({ actions, onActionClicked }) => {
         />
       )}
       {currentPage === Pages.advancedFormulaPage && (
-        <div>
-          Addvanced formula page
-          <button
-            onClick={handleCancelClicked}
-            className={styles.quick_fix_button}
-          >
-            Cancel
-          </button>
-        </div>
+        <AdvancedFormulas onCancelClick={handleCancelClicked} />
       )}
     </div>
   );

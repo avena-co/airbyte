@@ -66,88 +66,86 @@ const QuickFixes: React.FC<IProps> = ({
   const quickFixAction = actions.find((el) => el.type === "quickFixErrors");
 
   return (
-    <div className={styles.container}>
-      <div className={styles.quick_fixes}>
-        <div className={styles.title}>Quick Fixes</div>
-        <div className={styles.content}>
-          <div className={styles.section}>
-            <div className={styles.section_header}>Quick Fixes</div>
-            {renderSelectedActions.map((el) => {
-              return (
-                <div
-                  onClick={() => onActionClicked(el)}
-                  key={el.id}
-                  className={styles.action}
-                >
-                  {el.label}
-                  {el.type === "quickFixErrors" && (
-                    <span>
-                      {el.operation === "skipRow"
-                        ? "skip row"
-                        : el.operation === "ignoreError"
-                        ? "ignore error"
-                        : `fill cell with: ${customValue}`}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          <div className={styles.section}>
-            <div className={styles.section_header_2}>GENERAL</div>
-            {renderActions.map((el) => {
-              return (
-                <div
-                  onClick={() => onActionClicked(el)}
-                  key={el.id}
-                  className={styles.action}
-                >
-                  {el.label}
-                </div>
-              );
-            })}
-          </div>
-          <div className={styles.section}>
-            <div className={styles.section_header_2}>QUICKFIX ERRORS</div>
-            {!quickFixAction?.selected && (
-              <select onChange={handleSelectChange} className={styles.action}>
-                <option value="" selected={true} hidden={true}>
-                  If there is a QuickFix error...
-                </option>
-                <option value="ignoreError"> Ignore error </option>
-                <option value="skipRow"> Skip row </option>
-                <option value="fillCellWithCustomValue">
-                  Fill cell with custom value
-                </option>
-              </select>
-            )}
-            {customValueInputVisible && (
-              <div>
-                <Input
-                  style={{ marginBottom: "8px" }}
-                  placeholder="Provide value"
-                  type="text"
-                  onChange={(e) => setCustomValue(e.target.value)}
-                />
-                <div style={{ display: "flex" }}>
-                  <div style={{ display: "flex", flex: "1 1 0px" }} />
-                  <Button onClick={handleAddCustomValueClick} type="primary">
-                    APPLY QUICKFIX
-                  </Button>
-                </div>
+    <div className={styles.quick_fixes}>
+      <div className={styles.title}>Quick Fixes</div>
+      <div className={styles.content}>
+        <div className={styles.section}>
+          <div className={styles.section_header}>Quick Fixes</div>
+          {renderSelectedActions.map((el) => {
+            return (
+              <div
+                onClick={() => onActionClicked(el)}
+                key={el.id}
+                className={styles.action}
+              >
+                {el.label}
+                {el.type === "quickFixErrors" && (
+                  <span>
+                    {el.operation === "skipRow"
+                      ? "skip row"
+                      : el.operation === "ignoreError"
+                      ? "ignore error"
+                      : `fill cell with: ${customValue}`}
+                  </span>
+                )}
               </div>
-            )}
-          </div>
+            );
+          })}
         </div>
-        <div className={styles.quick_fix_buttons}>
-          <div className={styles.separator}>Or</div>
-          <button
-            onClick={advancedFormulaClick}
-            className={styles.quick_fix_button}
-          >
-            Use Advanced Formulas
-          </button>
+        <div className={styles.section}>
+          <div className={styles.section_header_2}>GENERAL</div>
+          {renderActions.map((el) => {
+            return (
+              <div
+                onClick={() => onActionClicked(el)}
+                key={el.id}
+                className={styles.action}
+              >
+                {el.label}
+              </div>
+            );
+          })}
         </div>
+        <div className={styles.section}>
+          <div className={styles.section_header_2}>QUICKFIX ERRORS</div>
+          {!quickFixAction?.selected && (
+            <select onChange={handleSelectChange} className={styles.action}>
+              <option value="" selected={true} hidden={true}>
+                If there is a QuickFix error...
+              </option>
+              <option value="ignoreError"> Ignore error </option>
+              <option value="skipRow"> Skip row </option>
+              <option value="fillCellWithCustomValue">
+                Fill cell with custom value
+              </option>
+            </select>
+          )}
+          {customValueInputVisible && (
+            <div>
+              <Input
+                style={{ marginBottom: "8px" }}
+                placeholder="Provide value"
+                type="text"
+                onChange={(e) => setCustomValue(e.target.value)}
+              />
+              <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", flex: "1 1 0px" }} />
+                <Button onClick={handleAddCustomValueClick} type="primary">
+                  APPLY QUICKFIX
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className={styles.quick_fix_buttons}>
+        <div className={styles.separator}>Or</div>
+        <button
+          onClick={advancedFormulaClick}
+          className={styles.quick_fix_button}
+        >
+          Use Advanced Formulas
+        </button>
       </div>
     </div>
   );

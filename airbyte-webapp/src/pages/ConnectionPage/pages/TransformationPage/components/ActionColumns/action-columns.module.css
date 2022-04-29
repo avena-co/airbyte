@@ -13,6 +13,7 @@
   min-height: 100%;
   height: fit-content;
   display: flex;
+  flex: 1;
   flex-direction: column;
 }
 
@@ -111,6 +112,16 @@
   align-items: center;
 }
 
+.advanced_formula_buttons {
+  border-top: 1px solid rgb(229, 229, 229);
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  -webkit-box-align: center;
+  align-items: flex-start;
+  padding: 18px;
+}
+
 .seperator {
   font-weight: 500;
   font-size: 15px;
@@ -139,5 +150,28 @@
   font-weight: 400;
   font-size: 16px;
   border: 1px solid;
+  border-radius: 4px;
+}
+
+.advanced_formula_button {
+  padding: 5px 15px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.75;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.25px;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  -moz-appearance: none;
+  text-decoration: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  height: 36px;
+  background: white;
+  color: #fed503;
+  font-weight: 400;
+  font-size: 16px;
+  border: 1px solid #fed503;
   border-radius: 4px;
 }
