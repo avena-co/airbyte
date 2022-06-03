@@ -24,7 +24,7 @@
     "@rest-hooks/legacy": "^2.0.5",
     "@sentry/react": "^6.17.9",
     "@sentry/tracing": "^6.17.9",
-    "antd": "^4.19.5",
+    "antd": "^4.20.7",
     "dayjs": "^1.10.7",
     "firebase": "^9.6.7",
     "flat": "^5.0.2",

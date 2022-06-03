@@ -4,6 +4,7 @@
 
 package io.airbyte.integrations.source.relationaldb;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -80,6 +81,8 @@ public abstract class AbstractDbSource<DataType, Database extends AbstractDataba
   @Override
   public AirbyteCatalog discover(final JsonNode config) throws Exception {
     try (final Database database = createDatabaseInternal(config)) {
+      String json = "{ \"arr\":[{ \"f1\":\"Hello\", \"f2\":null },{ \"f1\":\"Hello\", \"f2\":null }]}";
+      JsonNode jsonNode = objectMapper.readTree(json);
       final List<AirbyteStream> streams = getTables(database).stream()
           .map(tableInfo -> CatalogHelpers
               .createAirbyteStream(tableInfo.getName(), tableInfo.getNameSpace(),
@@ -87,6 +90,8 @@ public abstract class AbstractDbSource<DataType, Database extends AbstractDataba
               .withSupportedSyncModes(
                   Lists.newArrayList(SyncMode.FULL_REFRESH, SyncMode.INCREMENTAL))
               .withSourceDefinedPrimaryKey(Types.boxToListofList(tableInfo.getPrimaryKeys())))
+              .withFirstRows("ar1")
+              // .withFirstRows(jsonNode.get("arr"))
           .collect(Collectors.toList());
       return new AirbyteCatalog().withStreams(streams);
     }

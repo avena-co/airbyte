@@ -4,6 +4,7 @@ import { IntlProvider } from "react-intl";
 import { CacheProvider } from "rest-hooks";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router } from "react-router-dom";
+// import "antd/dist/antd.css";
 
 import en from "./locales/en.json";
 import GlobalStyle from "./global-styles";

@@ -1487,6 +1487,8 @@ components:
               type: string
             type: array
           type: array
+        firstRows:
+          type: string
         supportedSyncModes:
           items:
             $ref: "#/components/schemas/SyncMode"
@@ -1503,6 +1505,8 @@ components:
           $ref: "#/components/schemas/AirbyteStreamConfiguration"
         stream:
           $ref: "#/components/schemas/AirbyteStream"
+        test:
+          type: string
       type: object
     AirbyteStreamConfiguration:
       additionalProperties: false

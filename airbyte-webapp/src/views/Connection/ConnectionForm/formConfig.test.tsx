@@ -27,6 +27,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
         ],
       },
@@ -67,6 +68,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
           {
             stream: {
@@ -85,6 +87,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
           {
             stream: {
@@ -103,6 +106,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
         ],
       },
@@ -146,6 +150,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
         ],
       },
@@ -188,6 +193,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
           {
             stream: {
@@ -206,6 +212,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
           {
             stream: {
@@ -224,6 +231,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
         ],
       },
@@ -264,6 +272,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
           {
             stream: {
@@ -282,6 +291,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
           {
             stream: {
@@ -300,6 +310,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             },
+            test: 1,
           },
         ],
       },
@@ -339,6 +350,7 @@ describe("calculateInitialCatalog", () => {
               primaryKey: [],
               aliasName: "",
             } as unknown) as AirbyteStreamConfiguration,
+            test: 1,
           },
         ],
       },

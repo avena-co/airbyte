@@ -23,6 +23,7 @@ export const useDiscoverSchema = (
   const fetchDiscoverSchema = useFetcher(SchemaResource.schemaShape(), true);
 
   const onDiscoverSchema = useCallback(async () => {
+    console.log("onDiscoverSchema");
     setIsLoading(true);
     setSchemaErrorStatus(null);
     try {

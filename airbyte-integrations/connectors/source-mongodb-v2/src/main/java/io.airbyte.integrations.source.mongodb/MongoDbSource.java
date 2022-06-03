@@ -156,6 +156,14 @@ public class MongoDbSource extends AbstractDbSource<BsonType, MongoDatabase> {
 
   }
 
+  private Set<String> getCollectionData(MongoDatabase database , String collectionName) {
+    MongoDatabase database = mongoClient.getDatabase();
+    MongoCollection<Document> collection = database.getCollection(collectionName);
+    Document doc = collection.find().limit(50);
+    if (doc != null) 
+      return doc.toJson();
+  }
+
   @Override
   protected List<TableInfo<CommonField<BsonType>>> discoverInternal(final MongoDatabase database, final String schema) throws Exception {
     // MondoDb doesn't support schemas

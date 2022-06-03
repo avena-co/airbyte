@@ -22,12 +22,13 @@ export enum DestinationSyncMode {
 export type AirbyteSchemaStream = {
   stream: AirbyteStream;
   config: AirbyteStreamConfiguration;
+  test: number;
 };
 
 export type SyncSchemaStream = {
   stream: AirbyteStream;
   config: AirbyteStreamConfiguration;
-
+  test: number;
   id: string;
 };
 

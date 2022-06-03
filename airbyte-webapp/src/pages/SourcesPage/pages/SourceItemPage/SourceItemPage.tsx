@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { Suspense, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useResource } from "rest-hooks";
@@ -28,6 +29,7 @@ import { getIcon } from "utils/imageUtils";
 import HeadTitle from "components/HeadTitle";
 import Placeholder, { ResourceTypes } from "components/Placeholder";
 import useWorkspace from "hooks/services/useWorkspace";
+import SourceDataTable from "./components/SourceDataTable";
 
 const SourceItemPage: React.FC = () => {
   const { query, push } = useRouter<{ id: string }>();
@@ -105,6 +107,25 @@ const SourceItemPage: React.FC = () => {
           currentSource={source}
           connectionsWithSource={connectionsWithSource}
         />
+      );
+    }
+    if (currentStep === StepsTypes.DATA) {
+      return (
+        <>
+          <TableItemTitle
+            type="destination"
+            tableName="tables.data"
+            dropDownData={destinationsDropDownData}
+            onSelect={onSelect}
+            entity={source.sourceName}
+            entityName={source.name}
+            entityIcon={
+              sourceDefinition ? getIcon(sourceDefinition.icon) : null
+            }
+          />
+
+          <SourceDataTable connections={connectionsWithSource} />
+        </>
       );
     }
 

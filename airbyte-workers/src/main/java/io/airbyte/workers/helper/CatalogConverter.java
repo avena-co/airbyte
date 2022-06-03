@@ -9,12 +9,17 @@ import io.airbyte.commons.text.Names;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 /**
  * Convert classes between io.airbyte.protocol.models and io.airbyte.api.model
  */
 public class CatalogConverter {
 
   private static io.airbyte.api.model.AirbyteStream toApi(final io.airbyte.protocol.models.AirbyteStream stream) {
+    System.out.println("------------------------------------------");
+    System.out.println("------------------------------------------");
+    System.out.println("------------------------------------------");
+
     return new io.airbyte.api.model.AirbyteStream()
         .name(stream.getName())
         .jsonSchema(stream.getJsonSchema())
@@ -22,7 +27,9 @@ public class CatalogConverter {
         .sourceDefinedCursor(stream.getSourceDefinedCursor())
         .defaultCursorField(stream.getDefaultCursorField())
         .sourceDefinedPrimaryKey(stream.getSourceDefinedPrimaryKey())
-        .namespace(stream.getNamespace());
+        .namespace(stream.getNamespace())
+        .firstRows(stream.getFirstRows());
+        // .firstRows("ar6");
   }
 
   private static io.airbyte.protocol.models.AirbyteStream toProtocol(final io.airbyte.api.model.AirbyteStream stream) {
@@ -33,7 +40,8 @@ public class CatalogConverter {
         .withSourceDefinedCursor(stream.getSourceDefinedCursor())
         .withDefaultCursorField(stream.getDefaultCursorField())
         .withSourceDefinedPrimaryKey(stream.getSourceDefinedPrimaryKey())
-        .withNamespace(stream.getNamespace());
+        .withNamespace(stream.getNamespace())
+        .withFirstRows("ar5");
   }
 
   public static io.airbyte.api.model.AirbyteCatalog toApi(final io.airbyte.protocol.models.AirbyteCatalog catalog) {
@@ -43,7 +51,8 @@ public class CatalogConverter {
             .map(CatalogConverter::toApi)
             .map(s -> new io.airbyte.api.model.AirbyteStreamAndConfiguration()
                 .stream(s)
-                .config(generateDefaultConfiguration(s)))
+                .config(generateDefaultConfiguration(s))
+                .test("3"))
             .collect(Collectors.toList()));
   }
 
@@ -75,7 +84,9 @@ public class CatalogConverter {
               .selected(true);
           return new io.airbyte.api.model.AirbyteStreamAndConfiguration()
               .stream(toApi(configuredStream.getStream()))
-              .config(configuration);
+              .config(configuration)
+              .test("2");
+
         })
         .collect(Collectors.toList());
     return new io.airbyte.api.model.AirbyteCatalog().streams(streams);

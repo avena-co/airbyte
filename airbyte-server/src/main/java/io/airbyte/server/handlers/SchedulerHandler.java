@@ -237,6 +237,7 @@ public class SchedulerHandler {
     final StandardSourceDefinition sourceDef = configRepository.getStandardSourceDefinition(source.getSourceDefinitionId());
     final String imageName = DockerUtils.getTaggedImageName(sourceDef.getDockerRepository(), sourceDef.getDockerImageTag());
     final SynchronousResponse<AirbyteCatalog> response = synchronousSchedulerClient.createDiscoverSchemaJob(source, imageName);
+    System.out.println("discoverSchemaForSourceFromSourceId");
     return discoverJobToOutput(response);
   }
 
@@ -254,6 +255,7 @@ public class SchedulerHandler {
         .withSourceDefinitionId(sourceCreate.getSourceDefinitionId())
         .withConfiguration(partialConfig);
     final SynchronousResponse<AirbyteCatalog> response = synchronousSchedulerClient.createDiscoverSchemaJob(source, imageName);
+    System.out.println("discoverSchemaForSourceFromSourceCreate");
     return discoverJobToOutput(response);
   }
 
@@ -262,6 +264,7 @@ public class SchedulerHandler {
         .jobInfo(jobConverter.getSynchronousJobRead(response));
 
     if (response.isSuccess()) {
+      System.out.println("111111111111111111111111111111");
       sourceDiscoverSchemaRead.catalog(CatalogConverter.toApi(response.getOutput()));
     }
 

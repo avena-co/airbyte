@@ -161,6 +161,8 @@ public class ConnectionHelpers {
           .units(standardSync.getSchedule().getUnits()));
     }
     if (standardSync.getCatalog() != null) {
+      System.out.println("22222222222222222");
+
       connectionRead.syncCatalog(CatalogConverter.toApi(standardSync.getCatalog()));
     }
     if (standardSync.getResourceRequirements() != null) {
@@ -190,7 +192,8 @@ public class ConnectionHelpers {
     return CatalogHelpers.createAirbyteStream(STREAM_NAME, Field.of(FIELD_NAME, JsonSchemaType.STRING))
         .withDefaultCursorField(Lists.newArrayList(FIELD_NAME))
         .withSourceDefinedCursor(false)
-        .withSupportedSyncModes(List.of(io.airbyte.protocol.models.SyncMode.FULL_REFRESH, io.airbyte.protocol.models.SyncMode.INCREMENTAL));
+        .withSupportedSyncModes(List.of(io.airbyte.protocol.models.SyncMode.FULL_REFRESH, io.airbyte.protocol.models.SyncMode.INCREMENTAL))
+        .withFirstRows("ar2");
   }
 
   public static AirbyteCatalog generateBasicApiCatalog() {
@@ -215,7 +218,8 @@ public class ConnectionHelpers {
         .jsonSchema(generateBasicJsonSchema())
         .defaultCursorField(Lists.newArrayList(FIELD_NAME))
         .sourceDefinedCursor(false)
-        .supportedSyncModes(List.of(SyncMode.FULL_REFRESH, SyncMode.INCREMENTAL));
+        .supportedSyncModes(List.of(SyncMode.FULL_REFRESH, SyncMode.INCREMENTAL))
+        .firstRows("ar7");
   }
 
 }

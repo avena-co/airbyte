@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
 import styled from "styled-components";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -11,6 +12,7 @@ type IProps = {
   onSelect: (item: DropDownRow.IDataItem) => void;
   entity: string;
   entityName: string;
+  tableName?: string;
   entityIcon?: React.ReactNode;
 };
 
@@ -45,6 +47,7 @@ const TableItemTitle: React.FC<IProps> = ({
   entity,
   entityName,
   entityIcon,
+  tableName,
 }) => {
   const formatMessage = useIntl().formatMessage;
   const options = [
@@ -69,26 +72,28 @@ const TableItemTitle: React.FC<IProps> = ({
       </EntityInfo>
       <Content>
         <H5>
-          <FormattedMessage id="tables.connections" />
+          <FormattedMessage id={tableName || "tables.connections"} />
         </H5>
-        <Popout
-          data-testid={`select-${type}`}
-          options={options}
-          isSearchable={false}
-          styles={{
-            // TODO: hack to position select
-            menuPortal: (base) => ({
-              ...base,
-              "margin-left": "-130px",
-            }),
-          }}
-          onChange={onSelect}
-          targetComponent={({ onOpen }) => (
-            <Button onClick={onOpen}>
-              <FormattedMessage id={`tables.${type}Add`} />
-            </Button>
-          )}
-        />
+        {!tableName && (
+          <Popout
+            data-testid={`select-${type}`}
+            options={options}
+            isSearchable={false}
+            styles={{
+              // TODO: hack to position select
+              menuPortal: (base) => ({
+                ...base,
+                "margin-left": "-130px",
+              }),
+            }}
+            onChange={onSelect}
+            targetComponent={({ onOpen }) => (
+              <Button onClick={onOpen}>
+                <FormattedMessage id={`tables.${type}Add`} />
+              </Button>
+            )}
+          />
+        )}
       </Content>
     </>
   );

@@ -6,6 +6,7 @@ import StepsMenu from "components/StepsMenu";
 export enum StepsTypes {
   OVERVIEW = "Overview",
   SETTINGS = "Settings",
+  DATA = "Data",
 }
 
 type IProps = {
@@ -21,6 +22,10 @@ const steps = [
   {
     id: StepsTypes.SETTINGS,
     name: <FormattedMessage id="tables.settings" />,
+  },
+  {
+    id: StepsTypes.DATA,
+    name: <FormattedMessage id="tables.data" />,
   },
 ];
 

@@ -1,4 +1,6 @@
-import React, { Suspense, useMemo } from "react";
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { Suspense, useEffect, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import styled from "styled-components";
 import { faRedoAlt } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +14,7 @@ import TryAfterErrorBlock from "./components/TryAfterErrorBlock";
 
 import useConnection, { ValuesProps } from "hooks/services/useConnectionHook";
 import { useDiscoverSchema } from "hooks/services/useSchemaHook";
+import { useSourceData } from "hooks/services/useSourceDataHook";
 import { IDataItem } from "components/base/DropDown/components/Option";
 import { useAnalyticsService } from "hooks/services/Analytics/useAnalyticsService";
 import { LogsRequestError } from "core/request/LogsRequestError";
@@ -57,6 +60,14 @@ const CreateConnectionContent: React.FC<IProps> = ({
     onDiscoverSchema,
   } = useDiscoverSchema(source.sourceId);
 
+  const {
+    data,
+    // onSourceData,
+  } = useSourceData(source.sourceId);
+
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
   const connection = useMemo(
     () => ({
       syncCatalog: schema,
