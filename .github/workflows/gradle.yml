@@ -3,8 +3,6 @@ name: Airbyte CI
 on:
   #ability to start task manually in Web UI
   workflow_dispatch:
-  schedule:
-    - cron: "0 */1 * * *"
   push:
     branches-ignore:
       - "gitbook/v1"
