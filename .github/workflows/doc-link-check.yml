@@ -4,8 +4,6 @@ name: Doc Link Checker
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '0 18 * * *'
 
 jobs:
   markdown-link-check:
