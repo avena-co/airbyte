@@ -3,6 +3,10 @@
 # Release for the version bump.
 name: Create Release
 
+on:
+  #ability to start task manually in Web UI
+  workflow_dispatch:
+
 jobs:
   create-release:
     if: startsWith(github.event.head_commit.message, 'Bump Airbyte version')
