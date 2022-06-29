@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Airbyte, Inc., all rights reserved.
+ * Copyright (c) 2022 Airbyte, Inc., all rights reserved.
  */
 
 package io.airbyte.integrations.base;
@@ -27,6 +27,7 @@ import io.sentry.NoOpTransaction;
 import io.sentry.Sentry;
 import io.sentry.SentryLevel;
 import io.sentry.SpanStatus;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,8 @@ public class IntegrationRunner {
     this.source = source;
     this.destination = destination;
     validator = new JsonSchemaValidator();
+
+    Thread.setDefaultUncaughtExceptionHandler(new AirbyteExceptionHandler());
   }
 
   @VisibleForTesting
@@ -150,7 +153,7 @@ public class IntegrationRunner {
         final ConfiguredAirbyteCatalog catalog = parseConfig(parsed.getCatalogPath(), ConfiguredAirbyteCatalog.class);
         final Optional<JsonNode> stateOptional = parsed.getStatePath().map(IntegrationRunner::parseConfig);
         try (final AutoCloseableIterator<AirbyteMessage> messageIterator = source.read(config, catalog, stateOptional.orElse(null))) {
-          AirbyteSentry.executeWithTracing("ReadSource", () -> messageIterator.forEachRemaining(outputRecordCollector::accept));
+          AirbyteSentry.executeWithTracing("ReadSource", () -> produceMessages(messageIterator));
         }
       }
       // destination only
@@ -168,11 +171,21 @@ public class IntegrationRunner {
     LOGGER.info("Completed integration: {}", integration.getClass().getName());
   }
 
+  private void produceMessages(final AutoCloseableIterator<AirbyteMessage> messageIterator) throws Exception {
+    watchForOrphanThreads(
+        () -> messageIterator.forEachRemaining(outputRecordCollector),
+        () -> System.exit(FORCED_EXIT_CODE),
+        INTERRUPT_THREAD_DELAY_MINUTES,
+        TimeUnit.MINUTES,
+        EXIT_THREAD_DELAY_MINUTES,
+        TimeUnit.MINUTES);
+  }
+
   @VisibleForTesting
   static void consumeWriteStream(final AirbyteMessageConsumer consumer) throws Exception {
     // use a Scanner that only processes new line characters to strictly abide with the
     // https://jsonlines.org/ standard
-    final Scanner input = new Scanner(System.in).useDelimiter("[\r\n]+");
+    final Scanner input = new Scanner(System.in, StandardCharsets.UTF_8).useDelimiter("[\r\n]+");
     consumer.start();
     while (input.hasNext()) {
       final String inputString = input.next();
@@ -189,7 +202,6 @@ public class IntegrationRunner {
     watchForOrphanThreads(
         () -> consumeWriteStream(consumer),
         () -> System.exit(FORCED_EXIT_CODE),
-        true,
         INTERRUPT_THREAD_DELAY_MINUTES,
         TimeUnit.MINUTES,
         EXIT_THREAD_DELAY_MINUTES,
@@ -210,7 +222,6 @@ public class IntegrationRunner {
   @VisibleForTesting
   static void watchForOrphanThreads(final Procedure runMethod,
                                     final Runnable exitHook,
-                                    final boolean sentryEnabled,
                                     final int interruptTimeDelay,
                                     final TimeUnit interruptTimeUnit,
                                     final int exitTimeDelay,
@@ -248,9 +259,7 @@ public class IntegrationRunner {
           // So, we schedule an interrupt hook after a fixed time delay instead...
           scheduledExecutorService.schedule(runningThread::interrupt, interruptTimeDelay, interruptTimeUnit);
         }
-        if (!sentryEnabled) {
-          Sentry.captureMessage(sentryMessageBuilder.toString(), SentryLevel.WARNING);
-        }
+        Sentry.captureMessage(sentryMessageBuilder.toString(), SentryLevel.WARNING);
         scheduledExecutorService.schedule(() -> {
           if (ThreadUtils.getAllThreads().stream()
               .anyMatch(runningThread -> !runningThread.isDaemon() && !runningThread.getName().equals(currentThread.getName()))) {
@@ -300,8 +309,8 @@ public class IntegrationRunner {
     final String version = parseConnectorVersion(env.getOrDefault("WORKER_CONNECTOR_IMAGE", ""));
     final String airbyteVersion = env.getOrDefault(EnvConfigs.AIRBYTE_VERSION, "");
     final String airbyteRole = env.getOrDefault(EnvConfigs.AIRBYTE_ROLE, "");
-    final boolean isDev = version.equals(AirbyteVersion.DEV_VERSION)
-        || airbyteVersion.equals(AirbyteVersion.DEV_VERSION)
+    final boolean isDev = version.startsWith(AirbyteVersion.DEV_VERSION_PREFIX)
+        || airbyteVersion.startsWith(AirbyteVersion.DEV_VERSION_PREFIX)
         || airbyteRole.equals("airbyter");
     if (isDev) {
       LOGGER.debug("Skip Sentry transaction for dev environment");
