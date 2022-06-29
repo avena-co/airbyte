@@ -3,9 +3,6 @@ name: Airbyte CI
 on:
   #ability to start task manually in Web UI
   workflow_dispatch:
-  push:
-    branches-ignore:
-      - "gitbook/v1"
 
 jobs:
   # COMMON TASKS
