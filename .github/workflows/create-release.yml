@@ -3,11 +3,6 @@
 # Release for the version bump.
 name: Create Release
 
-on:
-  push:
-    branches:
-      - master
-
 jobs:
   create-release:
     if: startsWith(github.event.head_commit.message, 'Bump Airbyte version')
