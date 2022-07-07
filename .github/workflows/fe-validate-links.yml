@@ -2,8 +2,6 @@ name: Frontend Link Validation
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '0 14 * * *'
 
 jobs:
   validate-frontend-links:
