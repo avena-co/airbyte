@@ -8,6 +8,7 @@ import CreateConnectionContent from "components/CreateConnectionContent";
 import HeadTitle from "components/HeadTitle";
 import StepsMenu from "components/StepsMenu";
 
+import { useFormChangeTrackerService } from "hooks/services/FormChangeTracker";
 import { useGetDestination } from "hooks/services/useDestinationHook";
 import { useGetSource } from "hooks/services/useSourceHook";
 import useRouter from "hooks/useRouter";
@@ -78,6 +79,7 @@ function usePreloadData(): {
 
 export const CreationFormPage: React.FC = () => {
   const { location, push } = useRouter();
+  const { clearAllFormChanges } = useFormChangeTrackerService();
 
   // TODO: Probably there is a better way to figure it out instead of just checking third elem
   const locationType = location.pathname.split("/")[3];
@@ -89,9 +91,12 @@ export const CreationFormPage: React.FC = () => {
       ? EntityStepsTypes.DESTINATION
       : EntityStepsTypes.SOURCE;
 
-  const hasConnectors = hasSourceId(location.state) && hasDestinationId(location.state);
   const [currentStep, setCurrentStep] = useState(
-    hasConnectors ? StepsTypes.CREATE_CONNECTION : StepsTypes.CREATE_ENTITY
+    hasSourceId(location.state) && hasDestinationId(location.state)
+      ? StepsTypes.CREATE_CONNECTION
+      : hasSourceId(location.state) && !hasDestinationId(location.state)
+      ? StepsTypes.CREATE_CONNECTOR
+      : StepsTypes.CREATE_ENTITY
   );
 
   const [currentEntityStep, setCurrentEntityStep] = useState(
@@ -108,6 +113,7 @@ export const CreationFormPage: React.FC = () => {
   } = usePreloadData();
 
   const onSelectExistingSource = (id: string) => {
+    clearAllFormChanges();
     push("", {
       state: {
         ...(location.state as Record<string, unknown>),
@@ -119,8 +125,8 @@ export const CreationFormPage: React.FC = () => {
   };
 
   const onSelectExistingDestination = (id: string) => {
+    clearAllFormChanges();
     setId(id);
-
     push("", {
       state: {
         ...(location.state as Record<string, unknown>),
