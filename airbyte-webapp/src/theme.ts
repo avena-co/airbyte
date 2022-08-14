@@ -104,17 +104,6 @@ export const theme = {
   yellow900: scss.yellow900,
   yellow: scss.yellow,
 
-  // Legacy colors - Do not use for new components
-  primaryColor: scss.blue,
-  primaryColor25: scss.blue100,
-  primaryColor12: scss.primaryColor12,
-  mediumPrimaryColor: scss.darkBlue700,
-  mediumPrimaryColor20: scss.blue50,
-  darkPrimaryColor: scss.darkBlue,
-  darkPrimaryColor60: scss.blue400,
-  brightPrimaryColor: scss.blue100,
-  lightPrimaryColor: scss.blue50,
-
   brightColor: scss.blue50,
 
   dangerColor: scss.red,

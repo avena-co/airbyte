@@ -4,13 +4,12 @@ import styled from "styled-components";
 
 import { Button, ContentCard } from "components";
 import LoadingSchema from "components/LoadingSchema";
-import JobItem from "components/JobItem";
+import { JobItem } from "components/JobItem/JobItem";
 import TryAfterErrorBlock from "components/CreateConnectionContent/components/TryAfterErrorBlock";
 
-import { useDiscoverSchema } from "hooks/services/useSchemaHook";
+import { useDiscoverSchema } from "hooks/services/useSourceHook";
 import { LogsRequestError } from "core/request/LogsRequestError";
-import { Destination, Source } from "core/domain/connector";
-import { Connection } from "core/domain/connection";
+import { DestinationRead, SourceRead, WebBackendConnectionRead } from "core/request/AirbyteClient";
 import { Select } from "antd";
 
 import styles from "./transformation-adjuster.module.css";
@@ -26,11 +25,11 @@ const SkipButton = styled.div`
 
 type IProps = {
   additionBottomControls?: React.ReactNode;
-  source: Source;
-  destination: Destination;
+  source: SourceRead;
+  destination: DestinationRead;
   onTransformClick: () => void;
   onSelectCard: (cardIDs: Array<String>, name: String) => void;
-  afterSubmitConnection?: (connection: Connection) => void;
+  afterSubmitConnection?: (connection: WebBackendConnectionRead) => void;
   noTitles?: boolean;
 };
 
@@ -61,7 +60,7 @@ const TransformationTitleAdjuster: React.FC<IProps> = ({
   );
 
   if (schemaErrorStatus) {
-    const jobInfo = LogsRequestError.extractJobInfo(schemaErrorStatus);
+    const job = LogsRequestError.extractJobInfo(schemaErrorStatus);
     return (
       <ContentCard
         title={
@@ -72,7 +71,7 @@ const TransformationTitleAdjuster: React.FC<IProps> = ({
           onClick={onDiscoverSchema}
           additionControl={<SkipButton>{additionBottomControls}</SkipButton>}
         />
-        {jobInfo && <JobItem jobInfo={jobInfo} />}
+        {job && <JobItem job={job} />}
       </ContentCard>
     );
   }
@@ -108,7 +107,7 @@ const TransformationTitleAdjuster: React.FC<IProps> = ({
                     }}
                   >
                     <div style={{ fontWeight: "bold", fontSize: "20px" }}>
-                      {stream.name}
+                      {stream?.name}
                     </div>
                     {Object.keys(properties ? properties : {}).map(
                       (property) => {

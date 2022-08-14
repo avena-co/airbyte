@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ScrollSync } from "scroll-sync-react";
-import { Destination, Source } from "core/domain/connector";
-import { Connection } from "core/domain/connection";
+import { DestinationRead, SourceRead, WebBackendConnectionRead } from "core/request/AirbyteClient";
 
 // components
 import SourceColumn from "./components/Source";
@@ -10,10 +9,10 @@ import ActionColumns from "./components/ActionColumns/ActionColumns";
 import TransformationTitleAdjuster from "./TransformationTitleAdjuster";
 
 type IProps = {
-  source: Source;
-  destination: Destination;
+  source: SourceRead;
+  destination: DestinationRead;
   onTransformClick: () => void;
-  afterSubmitConnection?: (connection: Connection) => void;
+  afterSubmitConnection?: (connection: WebBackendConnectionRead) => void;
 };
 
 interface Option {

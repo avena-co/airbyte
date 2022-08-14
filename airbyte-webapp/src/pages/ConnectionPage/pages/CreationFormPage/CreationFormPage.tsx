@@ -15,10 +15,10 @@ import { useDestinationDefinition } from "services/connector/DestinationDefiniti
 import { useSourceDefinition } from "services/connector/SourceDefinitionService";
 import { ConnectorDocumentationWrapper } from "views/Connector/ConnectorDocumentationLayout";
 
-import SourceResource from "core/resources/Source";
-import DestinationResource from "core/resources/Destination";
-import DestinationDefinitionResource from "core/resources/DestinationDefinition";
-import SourceDefinitionResource from "core/resources/SourceDefinition";
+// import SourceResource from "core/resources/Source";
+// import DestinationResource from "core/resources/Destination";
+// import DestinationDefinitionResource from "core/resources/DestinationDefinition";
+// import SourceDefinitionResource from "core/resources/SourceDefinition";
 import TransformationPage from "../TransformationPage";
 
 import {
@@ -267,7 +267,9 @@ export const CreationFormPage: React.FC = () => {
     [EntityStepsTypes.DESTINATION]: "destinations.newDestinationTitle",
     [EntityStepsTypes.SOURCE]: "sources.newSourceTitle",
   } as Record<EntityStepsTypes, string>)[type];
+
   console.log("currentStep", currentStep);
+
   return (
     <>
       <HeadTitle titles={[{ id: "connection.newConnectionTitle" }]} />
@@ -276,29 +278,27 @@ export const CreationFormPage: React.FC = () => {
           title={<FormattedMessage id={titleId} />}
           middleComponent={<StepsMenu lightMode data={steps} activeStep={currentStep} />}
         />
-      }
-    >
-      <FormPageContent
-        big={
-          currentStep === StepsTypes.CREATE_CONNECTION ||
-          currentStep === StepsTypes.CREATE_TRANSFORMATION
-        }
-      >
-        {currentStep !== StepsTypes.CREATE_CONNECTION &&
-          currentStep !== StepsTypes.CREATE_TRANSFORMATION &&
-          (!!source || !!destination) && (
-            <ConnectionBlock
-              itemFrom={source ? { name: source.name, icon: sourceDefinition?.icon } : undefined}
-              itemTo={
-                destination
-                  ? {
+        <FormPageContent
+          big={
+            currentStep === StepsTypes.CREATE_CONNECTION ||
+            currentStep === StepsTypes.CREATE_TRANSFORMATION
+          }
+        >
+          {currentStep !== StepsTypes.CREATE_CONNECTION &&
+            currentStep !== StepsTypes.CREATE_TRANSFORMATION &&
+            (!!source || !!destination) && (
+              <ConnectionBlock
+                itemFrom={source ? { name: source.name, icon: sourceDefinition?.icon } : undefined}
+                itemTo={
+                  destination
+                    ? {
                       name: destination.name,
                       icon: destinationDefinition?.icon,
                     }
-                  : undefined
-              }
-            />
-          )}
+                    : undefined
+                }
+              />
+            )}
           {renderStep()}
         </FormPageContent>
       </ConnectorDocumentationWrapper>
