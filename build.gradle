@@ -15,7 +15,6 @@ buildscript {
 plugins {
     id 'base'
     id 'pmd'
-    id 'com.diffplug.spotless' version '6.7.1'
     id 'com.github.hierynomus.license' version '0.16.1'
     id 'com.github.spotbugs' version '5.0.6'
     id 'version-catalog'
@@ -114,34 +113,6 @@ def createSpotlessTarget = { pattern ->
 
     return fileTree(dir: rootDir, include: pattern, exclude: excludes.collect { "**/${it}" })
 }
-
-spotless {
-    java {
-        target createSpotlessTarget('**/*.java')
-
-        importOrder()
-
-        eclipse('4.21.0').configFile(rootProject.file('tools/gradle/codestyle/java-google-style.xml'))
-
-        licenseHeaderFile createJavaLicenseWith(rootProject.file('LICENSE_SHORT'))
-        removeUnusedImports()
-        trimTrailingWhitespace()
-    }
-    groovyGradle {
-        target createSpotlessTarget('**/*.gradle')
-    }
-    sql {
-        target createSpotlessTarget('**/*.sql')
-
-        dbeaver().configFile(rootProject.file('tools/gradle/codestyle/sql-dbeaver.properties'))
-    }
-    format 'styling', {
-        target createSpotlessTarget(['**/*.yaml', '**/*.json'])
-
-        prettier()
-    }
-}
-check.dependsOn 'spotlessApply'
 
 @SuppressWarnings('GroovyAssignabilityCheck')
 def Task getDockerBuildTask(String artifactName, String projectDir, String buildVersion, String buildTag) {
@@ -431,7 +402,6 @@ task('generate') {
 
 task('format') {
     dependsOn generate
-    dependsOn spotlessApply
     dependsOn subprojects.collect { it.getTasksByName('airbytePythonFormat', true) }
 }
 

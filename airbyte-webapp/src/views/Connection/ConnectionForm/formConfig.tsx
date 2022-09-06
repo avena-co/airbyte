@@ -9,6 +9,7 @@ import { SyncSchema } from "core/domain/catalog";
 import {
   isDbtTransformation,
   isNormalizationTransformation,
+  // isDeduplicationTransformation,
   NormalizationType,
 } from "core/domain/connection/operation";
 import { SOURCE_NAMESPACE_TAG } from "core/domain/connector/source";
@@ -207,14 +208,26 @@ const getInitialNormalization = (
   operations?: Array<OperationRead | OperationCreate>,
   isEditMode?: boolean
 ): NormalizationType => {
-  const initialNormalization =
-    operations?.find(isNormalizationTransformation)?.operatorConfiguration?.normalization?.option;
+  const initialNormalization = operations?.find(isNormalizationTransformation)?.operatorConfiguration?.normalization?.option;
 
   return initialNormalization
     ? NormalizationType[initialNormalization]
     : isEditMode
-    ? NormalizationType.raw
-    : NormalizationType.basic;
+      ? NormalizationType.raw
+      : NormalizationType.basic;
+};
+
+// const getInitialDeduplication = (
+//   operations?: Array<OperationRead | OperationCreate>,
+//   isEditMode?: boolean
+// ): boolean => {
+//   const initialDeduplication = operations?.find(isDeduplicationTransformation)?.operatorConfiguration?.deduplication?.option;
+
+//   return !!(initialDeduplication && isEditMode);
+// };
+
+const getInitialPipeline = (): string => {
+  return "pipeline";
 };
 
 const useInitialValues = (
@@ -263,11 +276,11 @@ const useFrequencyDropdownData = (): DropDownRow.IDataItem[] => {
         value: item.config,
         label: item.config
           ? formatMessage(
-              {
-                id: `form.every.${item.config.timeUnit}`,
-              },
-              { value: item.config.units }
-            )
+            {
+              id: `form.every.${item.config.timeUnit}`,
+            },
+            { value: item.config.units }
+          )
           : formatMessage({ id: "frequency.manual" }),
       })),
     [formatMessage]
@@ -283,5 +296,7 @@ export {
   SUPPORTED_MODES,
   useDefaultTransformation,
   getInitialNormalization,
+  // getInitialDeduplication,
+  getInitialPipeline,
   getInitialTransformations,
 };

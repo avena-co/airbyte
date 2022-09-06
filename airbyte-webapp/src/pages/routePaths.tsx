@@ -9,9 +9,12 @@ export enum RoutePaths {
   Destination = "destination",
   Source = "source",
   Settings = "settings",
+  Pipelines = "pipelines",
 
   Connection = "connection",
   ConnectionNew = "new-connection",
   SourceNew = "new-source",
   DestinationNew = "new-destination",
+  Pipeline = "pipeline",
+  PipelineNew = "new-pipeline",
 }

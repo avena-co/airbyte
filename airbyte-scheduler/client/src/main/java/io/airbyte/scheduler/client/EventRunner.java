@@ -14,6 +14,8 @@ public interface EventRunner {
 
   void createConnectionManagerWorkflow(final UUID connectionId);
 
+  void createPipelineManagerWorkflow(final UUID pipelineId);
+
   ManualOperationResult startNewManualSync(final UUID connectionId);
 
   ManualOperationResult startNewCancellation(final UUID connectionId);

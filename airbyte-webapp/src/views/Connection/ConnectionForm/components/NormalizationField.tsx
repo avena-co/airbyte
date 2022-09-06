@@ -1,18 +1,17 @@
 import { FieldProps } from "formik";
-import React from "react";
+import React, { /* useState */ } from "react";
 import { FormattedMessage } from "react-intl";
-import styled from "styled-components";
 
-import { LabeledRadioButton, Link } from "components";
+import {
+  LabeledRadioButton,
+  // LabeledSwitch,
+  Link
+} from "components";
 
 import { useConfig } from "config";
 import { NormalizationType } from "core/domain/connection/operation";
 
 import { ConnectionFormMode } from "../ConnectionForm";
-
-const Normalization = styled.div`
-  margin: 16px 0;
-`;
 
 type NormalizationBlockProps = FieldProps<string> & {
   mode: ConnectionFormMode;
@@ -20,8 +19,14 @@ type NormalizationBlockProps = FieldProps<string> & {
 
 const NormalizationField: React.FC<NormalizationBlockProps> = ({ form, field, mode }) => {
   const config = useConfig();
+
+  // const [normalizeName, setNormalizeName] = useState(false);
+  // const [normalizeAddress, setNormalizeAddress] = useState(false);
+  // const [normalizePhone, setNormalizePhone] = useState(false);
+  // const [normalizeURL, setNormalizeURL] = useState(false);
+
   return (
-    <Normalization>
+    <div>
       <LabeledRadioButton
         {...form.getFieldProps(field.name)}
         id="normalization.raw"
@@ -52,7 +57,48 @@ const NormalizationField: React.FC<NormalizationBlockProps> = ({ form, field, mo
           )
         }
       />
-    </Normalization>
+      {/* <LabeledRadioButton
+        {...form.getFieldProps(field.name)}
+        id="normalization.ib"
+        label={<FormattedMessage id="form.ibNormalization" />}
+        value={NormalizationType.ib}
+        checked={field.value === NormalizationType.ib}
+        disabled={mode === "readonly"}
+      />
+      {
+        field.value === NormalizationType.ib &&
+        <div style={{ margin: "0.5em 0 0 2em" }}>
+          <LabeledSwitch
+            name="name"
+            checked={normalizeName}
+            onChange={(ev) => setNormalizeName(ev.target.checked)}
+            label={<FormattedMessage id="form.ibNormalization.name" />}
+            checkbox
+          />
+          <LabeledSwitch
+            name="address"
+            checked={normalizeAddress}
+            onChange={(ev) => setNormalizeAddress(ev.target.checked)}
+            label={<FormattedMessage id="form.ibNormalization.address" />}
+            checkbox
+          />
+          <LabeledSwitch
+            name="phone"
+            checked={normalizePhone}
+            onChange={(ev) => setNormalizePhone(ev.target.checked)}
+            label={<FormattedMessage id="form.ibNormalization.phone" />}
+            checkbox
+          />
+          <LabeledSwitch
+            name="URL"
+            checked={normalizeURL}
+            onChange={(ev) => setNormalizeURL(ev.target.checked)}
+            label={<FormattedMessage id="form.ibNormalization.URL" />}
+            checkbox
+          />
+        </div>
+      } */}
+    </div>
   );
 };
 

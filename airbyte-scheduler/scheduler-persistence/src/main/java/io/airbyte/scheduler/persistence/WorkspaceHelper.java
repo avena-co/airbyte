@@ -11,6 +11,7 @@ import com.google.common.cache.LoadingCache;
 import io.airbyte.commons.functional.CheckedSupplier;
 import io.airbyte.config.DestinationConnection;
 import io.airbyte.config.JobConfig;
+import io.airbyte.config.Pipeline;
 import io.airbyte.config.SourceConnection;
 import io.airbyte.config.StandardSync;
 import io.airbyte.config.StandardSyncOperation;
@@ -37,6 +38,7 @@ public class WorkspaceHelper {
   private final LoadingCache<UUID, UUID> sourceToWorkspaceCache;
   private final LoadingCache<UUID, UUID> destinationToWorkspaceCache;
   private final LoadingCache<UUID, UUID> connectionToWorkspaceCache;
+  private final LoadingCache<UUID, UUID> pipelineToWorkspaceCache;
   private final LoadingCache<UUID, UUID> operationToWorkspaceCache;
   private final LoadingCache<Long, UUID> jobToWorkspaceCache;
 
@@ -70,6 +72,17 @@ public class WorkspaceHelper {
         final UUID sourceId = connection.getSourceId();
         final UUID destinationId = connection.getDestinationId();
         return getWorkspaceForConnectionIgnoreExceptions(sourceId, destinationId);
+      }
+
+    });
+
+    this.pipelineToWorkspaceCache = getExpiringCache(new CacheLoader<>() {
+
+      @Override
+      public UUID load(@NonNull final UUID pipelineId) throws JsonValidationException, ConfigNotFoundException, IOException {
+        final Pipeline pipeline = configRepository.getPipeline(pipelineId);
+        final UUID connectionId = pipeline.getConnectionId();
+        return getWorkspaceForConnectionIdIgnoreExceptions(connectionId);
       }
 
     });
@@ -160,6 +173,10 @@ public class WorkspaceHelper {
 
   public UUID getWorkspaceForConnectionIdIgnoreExceptions(final UUID connectionId) {
     return swallowExecutionException(() -> connectionToWorkspaceCache.get(connectionId));
+  }
+
+  public UUID getWorkspaceForPipelineIdIgnoreExceptions(final UUID pipelineId) {
+    return swallowExecutionException(() -> pipelineToWorkspaceCache.get(pipelineId));
   }
 
   // OPERATION ID

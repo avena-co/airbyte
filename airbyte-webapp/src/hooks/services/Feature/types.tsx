@@ -4,6 +4,7 @@ export enum FeatureItem {
   AllowUpdateConnectors = "ALLOW_UPDATE_CONNECTORS",
   AllowOAuthConnector = "ALLOW_OAUTH_CONNECTOR",
   AllowCreateConnection = "ALLOW_CREATE_CONNECTION",
+  AllowCreatePipeline = "ALLOW_CREATE_PIPELINE",
   AllowSync = "ALLOW_SYNC",
 }
 

@@ -10,6 +10,7 @@ import { ConnectionStatus } from "core/request/AirbyteClient";
 import { useAnalyticsService } from "hooks/services/Analytics";
 import { useGetConnection } from "hooks/services/useConnectionHook";
 import TransformationView from "pages/ConnectionPage/pages/ConnectionItemPage/components/TransformationView";
+// import PipelineView from "pages/ConnectionPage/pages/ConnectionItemPage/components/PipelineView";
 
 import ConnectionPageTitle from "./components/ConnectionPageTitle";
 import { ReplicationView } from "./components/ReplicationView";
@@ -85,6 +86,10 @@ const ConnectionItemPage: React.FC = () => {
             path={ConnectionSettingsRoutes.TRANSFORMATION}
             element={<TransformationView connection={connection} />}
           />
+          {/* <Route
+            path={ConnectionSettingsRoutes.PIPELINE}
+            element={<PipelineView connection={connection} />}
+          /> */}
           <Route
             path={ConnectionSettingsRoutes.SETTINGS}
             element={isConnectionDeleted ? <Navigate replace to=".." /> : <SettingsView connection={connection} />}

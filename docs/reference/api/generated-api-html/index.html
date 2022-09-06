@@ -320,6 +320,16 @@ font-style: italic;
   <li><a href="#listOperationsForConnection"><code><span class="http-method">post</span> /v1/operations/list</code></a></li>
   <li><a href="#updateOperation"><code><span class="http-method">post</span> /v1/operations/update</code></a></li>
   </ul>
+  <h4><a href="#Pipeline">Pipeline</a></h4>
+  <ul>
+  <li><a href="#createPipeline"><code><span class="http-method">post</span> /v1/pipelines/create</code></a></li>
+  <li><a href="#deletePipeline"><code><span class="http-method">post</span> /v1/pipelines/delete</code></a></li>
+  <li><a href="#getPipeline"><code><span class="http-method">post</span> /v1/pipelines/get</code></a></li>
+  <li><a href="#listAllPipelinesForWorkspace"><code><span class="http-method">post</span> /v1/pipelines/list_all</code></a></li>
+  <li><a href="#listPipelinesForWorkspace"><code><span class="http-method">post</span> /v1/pipelines/list</code></a></li>
+  <li><a href="#searchPipelines"><code><span class="http-method">post</span> /v1/pipelines/search</code></a></li>
+  <li><a href="#updatePipeline"><code><span class="http-method">post</span> /v1/pipelines/update</code></a></li>
+  </ul>
   <h4><a href="#Scheduler">Scheduler</a></h4>
   <ul>
   <li><a href="#executeDestinationCheckConnection"><code><span class="http-method">post</span> /v1/scheduler/destinations/check_connection</code></a></li>
@@ -363,13 +373,20 @@ font-style: italic;
   <h4><a href="#WebBackend">WebBackend</a></h4>
   <ul>
   <li><a href="#webBackendCreateConnection"><code><span class="http-method">post</span> /v1/web_backend/connections/create</code></a></li>
+  <li><a href="#webBackendCreatePipeline"><code><span class="http-method">post</span> /v1/web_backend/pipelines/create</code></a></li>
   <li><a href="#webBackendGetConnection"><code><span class="http-method">post</span> /v1/web_backend/connections/get</code></a></li>
+  <li><a href="#webBackendGetPipeline"><code><span class="http-method">post</span> /v1/web_backend/pipelines/get</code></a></li>
   <li><a href="#webBackendGetWorkspaceState"><code><span class="http-method">post</span> /v1/web_backend/workspace/state</code></a></li>
   <li><a href="#webBackendListAllConnectionsForWorkspace"><code><span class="http-method">post</span> /v1/web_backend/connections/list_all</code></a></li>
+  <li><a href="#webBackendListAllPipelinesForWorkspace"><code><span class="http-method">post</span> /v1/web_backend/pipelines/list_all</code></a></li>
   <li><a href="#webBackendListConnectionsForWorkspace"><code><span class="http-method">post</span> /v1/web_backend/connections/list</code></a></li>
+  <li><a href="#webBackendListPipelinesForWorkspace"><code><span class="http-method">post</span> /v1/web_backend/pipelines/list</code></a></li>
   <li><a href="#webBackendSearchConnections"><code><span class="http-method">post</span> /v1/web_backend/connections/search</code></a></li>
+  <li><a href="#webBackendSearchPipelines"><code><span class="http-method">post</span> /v1/web_backend/pipelines/search</code></a></li>
   <li><a href="#webBackendUpdateConnection"><code><span class="http-method">post</span> /v1/web_backend/connections/update</code></a></li>
   <li><a href="#webBackendUpdateConnectionNew"><code><span class="http-method">post</span> /v1/web_backend/connections/updateNew</code></a></li>
+  <li><a href="#webBackendUpdatePipeline"><code><span class="http-method">post</span> /v1/web_backend/pipelines/update</code></a></li>
+  <li><a href="#webBackendUpdatePipelineNew"><code><span class="http-method">post</span> /v1/web_backend/pipelines/updateNew</code></a></li>
   </ul>
   <h4><a href="#Workspace">Workspace</a></h4>
   <ul>
@@ -5842,6 +5859,424 @@ font-style: italic;
         <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
   </div> <!-- method -->
   <hr/>
+  <h1><a name="Pipeline">Pipeline</a></h1>
+  <div class="method"><a name="createPipeline"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/pipelines/create</code></pre></div>
+    <div class="method-summary">Create a pipeline for a connection (<span class="nickname">createPipeline</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">PipelineCreate <a href="#PipelineCreate">PipelineCreate</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#PipelineRead">PipelineRead</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#PipelineRead">PipelineRead</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deletePipeline"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/pipelines/delete</code></pre></div>
+    <div class="method-summary">Delete a pipeline (<span class="nickname">deletePipeline</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">PipelineIdRequestBody <a href="#PipelineIdRequestBody">PipelineIdRequestBody</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    The resource was deleted successfully.
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Object with given id was not found.
+        <a href="#NotFoundKnownExceptionInfo">NotFoundKnownExceptionInfo</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getPipeline"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/pipelines/get</code></pre></div>
+    <div class="method-summary">Get a pipeline (<span class="nickname">getPipeline</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">PipelineIdRequestBody <a href="#PipelineIdRequestBody">PipelineIdRequestBody</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#PipelineRead">PipelineRead</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#PipelineRead">PipelineRead</a>
+    <h4 class="field-label">404</h4>
+    Object with given id was not found.
+        <a href="#NotFoundKnownExceptionInfo">NotFoundKnownExceptionInfo</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listAllPipelinesForWorkspace"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/pipelines/list_all</code></pre></div>
+    <div class="method-summary">Returns all pipelines for a workspace, including deleted pipelines. (<span class="nickname">listAllPipelinesForWorkspace</span>)</div>
+    <div class="method-notes">List pipelines for workspace, including deleted pipelines.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WorkspaceIdRequestBody <a href="#WorkspaceIdRequestBody">WorkspaceIdRequestBody</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#PipelineReadList">PipelineReadList</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "pipelines" : [ {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#PipelineReadList">PipelineReadList</a>
+    <h4 class="field-label">404</h4>
+    Object with given id was not found.
+        <a href="#NotFoundKnownExceptionInfo">NotFoundKnownExceptionInfo</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="listPipelinesForWorkspace"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/pipelines/list</code></pre></div>
+    <div class="method-summary">Returns all pipelines for a workspace. (<span class="nickname">listPipelinesForWorkspace</span>)</div>
+    <div class="method-notes">List pipelines for workspace. Does not return deleted pipelines.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WorkspaceIdRequestBody <a href="#WorkspaceIdRequestBody">WorkspaceIdRequestBody</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#PipelineReadList">PipelineReadList</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "pipelines" : [ {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#PipelineReadList">PipelineReadList</a>
+    <h4 class="field-label">404</h4>
+    Object with given id was not found.
+        <a href="#NotFoundKnownExceptionInfo">NotFoundKnownExceptionInfo</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="searchPipelines"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/pipelines/search</code></pre></div>
+    <div class="method-summary">Search pipelines (<span class="nickname">searchPipelines</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">PipelineSearch <a href="#PipelineSearch">PipelineSearch</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#PipelineReadList">PipelineReadList</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "pipelines" : [ {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#PipelineReadList">PipelineReadList</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updatePipeline"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/pipelines/update</code></pre></div>
+    <div class="method-summary">Update a pipeline (<span class="nickname">updatePipeline</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">PipelineUpdate <a href="#PipelineUpdate">PipelineUpdate</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#PipelineRead">PipelineRead</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#PipelineRead">PipelineRead</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
   <h1><a name="Scheduler">Scheduler</a></h1>
   <div class="method"><a name="executeDestinationCheckConnection"/>
     <div class="method-path">
@@ -8270,6 +8705,126 @@ font-style: italic;
         <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="webBackendCreatePipeline"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/web_backend/pipelines/create</code></pre></div>
+    <div class="method-summary">Create a pipeline (<span class="nickname">webBackendCreatePipeline</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WebBackendPipelineCreate <a href="#WebBackendPipelineCreate">WebBackendPipelineCreate</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "connection" : {
+    "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "prefix" : "prefix",
+    "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "resourceRequirements" : {
+      "cpu_limit" : "cpu_limit",
+      "memory_request" : "memory_request",
+      "memory_limit" : "memory_limit",
+      "cpu_request" : "cpu_request"
+    },
+    "schedule" : {
+      "units" : 0,
+      "timeUnit" : "minutes"
+    },
+    "name" : "name",
+    "syncCatalog" : {
+      "streams" : [ {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      }, {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      } ]
+    },
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "namespaceFormat" : "${SOURCE_NAMESPACE}",
+    "operationIds" : [ null, null ],
+    "scheduleData" : {
+      "cron" : {
+        "cronExpression" : "cronExpression",
+        "cronTimeZone" : "cronTimeZone"
+      },
+      "basicSchedule" : {
+        "units" : 6,
+        "timeUnit" : "minutes"
+      }
+    }
+  },
+  "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="webBackendGetConnection"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -8482,6 +9037,129 @@ font-style: italic;
         <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="webBackendGetPipeline"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/web_backend/pipelines/get</code></pre></div>
+    <div class="method-summary">Get a pipeline (<span class="nickname">webBackendGetPipeline</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WebBackendPipelineRequestBody <a href="#WebBackendPipelineRequestBody">WebBackendPipelineRequestBody</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "connection" : {
+    "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "prefix" : "prefix",
+    "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "resourceRequirements" : {
+      "cpu_limit" : "cpu_limit",
+      "memory_request" : "memory_request",
+      "memory_limit" : "memory_limit",
+      "cpu_request" : "cpu_request"
+    },
+    "schedule" : {
+      "units" : 0,
+      "timeUnit" : "minutes"
+    },
+    "name" : "name",
+    "syncCatalog" : {
+      "streams" : [ {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      }, {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      } ]
+    },
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "namespaceFormat" : "${SOURCE_NAMESPACE}",
+    "operationIds" : [ null, null ],
+    "scheduleData" : {
+      "cron" : {
+        "cronExpression" : "cronExpression",
+        "cronTimeZone" : "cronTimeZone"
+      },
+      "basicSchedule" : {
+        "units" : 6,
+        "timeUnit" : "minutes"
+      }
+    }
+  },
+  "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
+    <h4 class="field-label">404</h4>
+    Object with given id was not found.
+        <a href="#NotFoundKnownExceptionInfo">NotFoundKnownExceptionInfo</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="webBackendGetWorkspaceState"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -8518,6 +9196,7 @@ font-style: italic;
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
+  "hasPipelines" : true,
   "hasDestinations" : true,
   "hasConnections" : true,
   "hasSources" : true
@@ -8912,6 +9591,198 @@ font-style: italic;
         <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="webBackendListAllPipelinesForWorkspace"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/web_backend/pipelines/list_all</code></pre></div>
+    <div class="method-summary">Returns all pipelines for a workspace. (<span class="nickname">webBackendListAllPipelinesForWorkspace</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WorkspaceIdRequestBody <a href="#WorkspaceIdRequestBody">WorkspaceIdRequestBody</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebBackendPipelineReadList">WebBackendPipelineReadList</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "pipelines" : [ {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "connection" : {
+      "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "prefix" : "prefix",
+      "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "resourceRequirements" : {
+        "cpu_limit" : "cpu_limit",
+        "memory_request" : "memory_request",
+        "memory_limit" : "memory_limit",
+        "cpu_request" : "cpu_request"
+      },
+      "schedule" : {
+        "units" : 0,
+        "timeUnit" : "minutes"
+      },
+      "name" : "name",
+      "syncCatalog" : {
+        "streams" : [ {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        }, {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        } ]
+      },
+      "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "namespaceFormat" : "${SOURCE_NAMESPACE}",
+      "operationIds" : [ null, null ],
+      "scheduleData" : {
+        "cron" : {
+          "cronExpression" : "cronExpression",
+          "cronTimeZone" : "cronTimeZone"
+        },
+        "basicSchedule" : {
+          "units" : 6,
+          "timeUnit" : "minutes"
+        }
+      }
+    },
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "connection" : {
+      "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "prefix" : "prefix",
+      "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "resourceRequirements" : {
+        "cpu_limit" : "cpu_limit",
+        "memory_request" : "memory_request",
+        "memory_limit" : "memory_limit",
+        "cpu_request" : "cpu_request"
+      },
+      "schedule" : {
+        "units" : 0,
+        "timeUnit" : "minutes"
+      },
+      "name" : "name",
+      "syncCatalog" : {
+        "streams" : [ {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        }, {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        } ]
+      },
+      "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "namespaceFormat" : "${SOURCE_NAMESPACE}",
+      "operationIds" : [ null, null ],
+      "scheduleData" : {
+        "cron" : {
+          "cronExpression" : "cronExpression",
+          "cronTimeZone" : "cronTimeZone"
+        },
+        "basicSchedule" : {
+          "units" : 6,
+          "timeUnit" : "minutes"
+        }
+      }
+    },
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#WebBackendPipelineReadList">WebBackendPipelineReadList</a>
+    <h4 class="field-label">404</h4>
+    Object with given id was not found.
+        <a href="#NotFoundKnownExceptionInfo">NotFoundKnownExceptionInfo</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="webBackendListConnectionsForWorkspace"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -9282,6 +10153,198 @@ font-style: italic;
         <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
   </div> <!-- method -->
   <hr/>
+  <div class="method"><a name="webBackendListPipelinesForWorkspace"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/web_backend/pipelines/list</code></pre></div>
+    <div class="method-summary">Returns all non-deleted pipelines for a workspace. (<span class="nickname">webBackendListPipelinesForWorkspace</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WorkspaceIdRequestBody <a href="#WorkspaceIdRequestBody">WorkspaceIdRequestBody</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebBackendPipelineReadList">WebBackendPipelineReadList</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "pipelines" : [ {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "connection" : {
+      "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "prefix" : "prefix",
+      "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "resourceRequirements" : {
+        "cpu_limit" : "cpu_limit",
+        "memory_request" : "memory_request",
+        "memory_limit" : "memory_limit",
+        "cpu_request" : "cpu_request"
+      },
+      "schedule" : {
+        "units" : 0,
+        "timeUnit" : "minutes"
+      },
+      "name" : "name",
+      "syncCatalog" : {
+        "streams" : [ {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        }, {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        } ]
+      },
+      "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "namespaceFormat" : "${SOURCE_NAMESPACE}",
+      "operationIds" : [ null, null ],
+      "scheduleData" : {
+        "cron" : {
+          "cronExpression" : "cronExpression",
+          "cronTimeZone" : "cronTimeZone"
+        },
+        "basicSchedule" : {
+          "units" : 6,
+          "timeUnit" : "minutes"
+        }
+      }
+    },
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "connection" : {
+      "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "prefix" : "prefix",
+      "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "resourceRequirements" : {
+        "cpu_limit" : "cpu_limit",
+        "memory_request" : "memory_request",
+        "memory_limit" : "memory_limit",
+        "cpu_request" : "cpu_request"
+      },
+      "schedule" : {
+        "units" : 0,
+        "timeUnit" : "minutes"
+      },
+      "name" : "name",
+      "syncCatalog" : {
+        "streams" : [ {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        }, {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        } ]
+      },
+      "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "namespaceFormat" : "${SOURCE_NAMESPACE}",
+      "operationIds" : [ null, null ],
+      "scheduleData" : {
+        "cron" : {
+          "cronExpression" : "cronExpression",
+          "cronTimeZone" : "cronTimeZone"
+        },
+        "basicSchedule" : {
+          "units" : 6,
+          "timeUnit" : "minutes"
+        }
+      }
+    },
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#WebBackendPipelineReadList">WebBackendPipelineReadList</a>
+    <h4 class="field-label">404</h4>
+    Object with given id was not found.
+        <a href="#NotFoundKnownExceptionInfo">NotFoundKnownExceptionInfo</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="webBackendSearchConnections"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -9644,6 +10707,195 @@ font-style: italic;
     <h4 class="field-label">200</h4>
     Successful operation
         <a href="#WebBackendConnectionReadList">WebBackendConnectionReadList</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="webBackendSearchPipelines"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/web_backend/pipelines/search</code></pre></div>
+    <div class="method-summary">Search pipelines (<span class="nickname">webBackendSearchPipelines</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WebBackendPipelineSearch <a href="#WebBackendPipelineSearch">WebBackendPipelineSearch</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebBackendPipelineReadList">WebBackendPipelineReadList</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "pipelines" : [ {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "connection" : {
+      "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "prefix" : "prefix",
+      "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "resourceRequirements" : {
+        "cpu_limit" : "cpu_limit",
+        "memory_request" : "memory_request",
+        "memory_limit" : "memory_limit",
+        "cpu_request" : "cpu_request"
+      },
+      "schedule" : {
+        "units" : 0,
+        "timeUnit" : "minutes"
+      },
+      "name" : "name",
+      "syncCatalog" : {
+        "streams" : [ {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        }, {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        } ]
+      },
+      "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "namespaceFormat" : "${SOURCE_NAMESPACE}",
+      "operationIds" : [ null, null ],
+      "scheduleData" : {
+        "cron" : {
+          "cronExpression" : "cronExpression",
+          "cronTimeZone" : "cronTimeZone"
+        },
+        "basicSchedule" : {
+          "units" : 6,
+          "timeUnit" : "minutes"
+        }
+      }
+    },
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  }, {
+    "name" : "name",
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "connection" : {
+      "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "prefix" : "prefix",
+      "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "resourceRequirements" : {
+        "cpu_limit" : "cpu_limit",
+        "memory_request" : "memory_request",
+        "memory_limit" : "memory_limit",
+        "cpu_request" : "cpu_request"
+      },
+      "schedule" : {
+        "units" : 0,
+        "timeUnit" : "minutes"
+      },
+      "name" : "name",
+      "syncCatalog" : {
+        "streams" : [ {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        }, {
+          "stream" : {
+            "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+            "supportedSyncModes" : [ null, null ],
+            "sourceDefinedCursor" : true,
+            "name" : "name",
+            "namespace" : "namespace",
+            "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+          },
+          "config" : {
+            "aliasName" : "aliasName",
+            "cursorField" : [ "cursorField", "cursorField" ],
+            "selected" : true,
+            "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+          }
+        } ]
+      },
+      "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+      "namespaceFormat" : "${SOURCE_NAMESPACE}",
+      "operationIds" : [ null, null ],
+      "scheduleData" : {
+        "cron" : {
+          "cronExpression" : "cronExpression",
+          "cronTimeZone" : "cronTimeZone"
+        },
+        "basicSchedule" : {
+          "units" : 6,
+          "timeUnit" : "minutes"
+        }
+      }
+    },
+    "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#WebBackendPipelineReadList">WebBackendPipelineReadList</a>
     <h4 class="field-label">422</h4>
     Input failed validation
         <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
@@ -10062,6 +11314,246 @@ font-style: italic;
     <h4 class="field-label">200</h4>
     Successful operation
         <a href="#WebBackendConnectionRead">WebBackendConnectionRead</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="webBackendUpdatePipeline"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/web_backend/pipelines/update</code></pre></div>
+    <div class="method-summary">Update a pipeline (<span class="nickname">webBackendUpdatePipeline</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WebBackendPipelineUpdate <a href="#WebBackendPipelineUpdate">WebBackendPipelineUpdate</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "connection" : {
+    "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "prefix" : "prefix",
+    "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "resourceRequirements" : {
+      "cpu_limit" : "cpu_limit",
+      "memory_request" : "memory_request",
+      "memory_limit" : "memory_limit",
+      "cpu_request" : "cpu_request"
+    },
+    "schedule" : {
+      "units" : 0,
+      "timeUnit" : "minutes"
+    },
+    "name" : "name",
+    "syncCatalog" : {
+      "streams" : [ {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      }, {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      } ]
+    },
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "namespaceFormat" : "${SOURCE_NAMESPACE}",
+    "operationIds" : [ null, null ],
+    "scheduleData" : {
+      "cron" : {
+        "cronExpression" : "cronExpression",
+        "cronTimeZone" : "cronTimeZone"
+      },
+      "basicSchedule" : {
+        "units" : 6,
+        "timeUnit" : "minutes"
+      }
+    }
+  },
+  "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
+    <h4 class="field-label">422</h4>
+    Input failed validation
+        <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="webBackendUpdatePipelineNew"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/web_backend/pipelines/updateNew</code></pre></div>
+    <div class="method-summary">Update a pipeline (<span class="nickname">webBackendUpdatePipelineNew</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">WebBackendPipelineUpdate <a href="#WebBackendPipelineUpdate">WebBackendPipelineUpdate</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "name",
+  "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+  "connection" : {
+    "sourceId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "sourceCatalogId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "prefix" : "prefix",
+    "destinationId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "resourceRequirements" : {
+      "cpu_limit" : "cpu_limit",
+      "memory_request" : "memory_request",
+      "memory_limit" : "memory_limit",
+      "cpu_request" : "cpu_request"
+    },
+    "schedule" : {
+      "units" : 0,
+      "timeUnit" : "minutes"
+    },
+    "name" : "name",
+    "syncCatalog" : {
+      "streams" : [ {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      }, {
+        "stream" : {
+          "sourceDefinedPrimaryKey" : [ [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ], [ "sourceDefinedPrimaryKey", "sourceDefinedPrimaryKey" ] ],
+          "supportedSyncModes" : [ null, null ],
+          "sourceDefinedCursor" : true,
+          "name" : "name",
+          "namespace" : "namespace",
+          "defaultCursorField" : [ "defaultCursorField", "defaultCursorField" ]
+        },
+        "config" : {
+          "aliasName" : "aliasName",
+          "cursorField" : [ "cursorField", "cursorField" ],
+          "selected" : true,
+          "primaryKey" : [ [ "primaryKey", "primaryKey" ], [ "primaryKey", "primaryKey" ] ]
+        }
+      } ]
+    },
+    "connectionId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+    "namespaceFormat" : "${SOURCE_NAMESPACE}",
+    "operationIds" : [ null, null ],
+    "scheduleData" : {
+      "cron" : {
+        "cronExpression" : "cronExpression",
+        "cronTimeZone" : "cronTimeZone"
+      },
+      "basicSchedule" : {
+        "units" : 6,
+        "timeUnit" : "minutes"
+      }
+    }
+  },
+  "pipelineId" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Successful operation
+        <a href="#WebBackendPipelineRead">WebBackendPipelineRead</a>
     <h4 class="field-label">422</h4>
     Input failed validation
         <a href="#InvalidInputExceptionInfo">InvalidInputExceptionInfo</a>
@@ -10787,6 +12279,12 @@ font-style: italic;
     <li><a href="#OperatorNormalization"><code>OperatorNormalization</code> - </a></li>
     <li><a href="#OperatorType"><code>OperatorType</code> - </a></li>
     <li><a href="#Pagination"><code>Pagination</code> - </a></li>
+    <li><a href="#PipelineCreate"><code>PipelineCreate</code> - </a></li>
+    <li><a href="#PipelineIdRequestBody"><code>PipelineIdRequestBody</code> - </a></li>
+    <li><a href="#PipelineRead"><code>PipelineRead</code> - </a></li>
+    <li><a href="#PipelineReadList"><code>PipelineReadList</code> - </a></li>
+    <li><a href="#PipelineSearch"><code>PipelineSearch</code> - </a></li>
+    <li><a href="#PipelineUpdate"><code>PipelineUpdate</code> - </a></li>
     <li><a href="#PrivateDestinationDefinitionRead"><code>PrivateDestinationDefinitionRead</code> - </a></li>
     <li><a href="#PrivateDestinationDefinitionReadList"><code>PrivateDestinationDefinitionReadList</code> - </a></li>
     <li><a href="#PrivateSourceDefinitionRead"><code>PrivateSourceDefinitionRead</code> - </a></li>
@@ -10830,6 +12328,12 @@ font-style: italic;
     <li><a href="#WebBackendConnectionSearch"><code>WebBackendConnectionSearch</code> - </a></li>
     <li><a href="#WebBackendConnectionUpdate"><code>WebBackendConnectionUpdate</code> - </a></li>
     <li><a href="#WebBackendOperationCreateOrUpdate"><code>WebBackendOperationCreateOrUpdate</code> - </a></li>
+    <li><a href="#WebBackendPipelineCreate"><code>WebBackendPipelineCreate</code> - </a></li>
+    <li><a href="#WebBackendPipelineRead"><code>WebBackendPipelineRead</code> - </a></li>
+    <li><a href="#WebBackendPipelineReadList"><code>WebBackendPipelineReadList</code> - </a></li>
+    <li><a href="#WebBackendPipelineRequestBody"><code>WebBackendPipelineRequestBody</code> - </a></li>
+    <li><a href="#WebBackendPipelineSearch"><code>WebBackendPipelineSearch</code> - </a></li>
+    <li><a href="#WebBackendPipelineUpdate"><code>WebBackendPipelineUpdate</code> - </a></li>
     <li><a href="#WebBackendWorkspaceState"><code>WebBackendWorkspaceState</code> - </a></li>
     <li><a href="#WebBackendWorkspaceStateResult"><code>WebBackendWorkspaceStateResult</code> - </a></li>
     <li><a href="#WorkspaceCreate"><code>WorkspaceCreate</code> - </a></li>
@@ -11825,6 +13329,54 @@ if oauth parameters were contained inside the top level, rootObject=[] If they w
     </div>  <!-- field-items -->
   </div>
   <div class="model">
+    <h3><a name="PipelineCreate"><code>PipelineCreate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Optional name of the pipeline </div>
+<div class="param">connectionId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PipelineIdRequestBody"><code>PipelineIdRequestBody</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelineId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PipelineRead"><code>PipelineRead</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelineId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">connectionId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PipelineReadList"><code>PipelineReadList</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelines </div><div class="param-desc"><span class="param-type"><a href="#PipelineRead">array[PipelineRead]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PipelineSearch"><code>PipelineSearch</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelineId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">connectionId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PipelineUpdate"><code>PipelineUpdate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelineId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name that will be set to this connection </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="PrivateDestinationDefinitionRead"><code>PrivateDestinationDefinitionRead</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
@@ -12260,6 +13812,56 @@ if oauth parameters were contained inside the top level, rootObject=[] If they w
     </div>  <!-- field-items -->
   </div>
   <div class="model">
+    <h3><a name="WebBackendPipelineCreate"><code>WebBackendPipelineCreate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Optional name of the pipeline </div>
+<div class="param">connectionId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebBackendPipelineRead"><code>WebBackendPipelineRead</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelineId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">connectionId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">connection (optional)</div><div class="param-desc"><span class="param-type"><a href="#ConnectionRead">ConnectionRead</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebBackendPipelineReadList"><code>WebBackendPipelineReadList</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelines </div><div class="param-desc"><span class="param-type"><a href="#WebBackendPipelineRead">array[WebBackendPipelineRead]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebBackendPipelineRequestBody"><code>WebBackendPipelineRequestBody</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">withRefreshedCatalog (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">pipelineId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebBackendPipelineSearch"><code>WebBackendPipelineSearch</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">pipelineId (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">connection (optional)</div><div class="param-desc"><span class="param-type"><a href="#ConnectionSearch">ConnectionSearch</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="WebBackendPipelineUpdate"><code>WebBackendPipelineUpdate</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Name that will be set to the pipeline </div>
+<div class="param">pipelineId </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
     <h3><a name="WebBackendWorkspaceState"><code>WebBackendWorkspaceState</code> - </a> <a class="up" href="#__Models">Up</a></h3>
     <div class='model-description'></div>
     <div class="field-items">
@@ -12273,6 +13875,7 @@ if oauth parameters were contained inside the top level, rootObject=[] If they w
       <div class="param">hasConnections </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
 <div class="param">hasSources </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
 <div class="param">hasDestinations </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+<div class="param">hasPipelines </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">

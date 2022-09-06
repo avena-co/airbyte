@@ -16,10 +16,6 @@ import { useDestinationDefinition } from "services/connector/DestinationDefiniti
 import { useSourceDefinition } from "services/connector/SourceDefinitionService";
 import { ConnectorDocumentationWrapper } from "views/Connector/ConnectorDocumentationLayout";
 
-// import SourceResource from "core/resources/Source";
-// import DestinationResource from "core/resources/Destination";
-// import DestinationDefinitionResource from "core/resources/DestinationDefinition";
-// import SourceDefinitionResource from "core/resources/SourceDefinition";
 import TransformationPage from "../TransformationPage";
 
 import {
@@ -133,10 +129,10 @@ export const CreationFormPage: React.FC = () => {
         destinationId: id,
       },
     });
-    setCurrentEntityStep(EntityStepsTypes.TRANSFORMATION);
+    setCurrentEntityStep(EntityStepsTypes.CONNECTION);
 
     // changes title of page
-    setCurrentStep(StepsTypes.CREATE_TRANSFORMATION);
+    setCurrentStep(StepsTypes.CREATE_CONNECTION);
   };
 
   const onTransformClick = () => {
@@ -243,10 +239,10 @@ export const CreationFormPage: React.FC = () => {
             id: StepsTypes.CREATE_CONNECTOR,
             name: <FormattedMessage id="onboarding.createDestination" />,
           },
-          {
-            id: StepsTypes.CREATE_TRANSFORMATION,
-            name: <FormattedMessage id="onboarding.createTransformation" />,
-          },
+          // {
+          //   id: StepsTypes.CREATE_TRANSFORMATION,
+          //   name: <FormattedMessage id="onboarding.createTransformation" />,
+          // },
           {
             id: StepsTypes.CREATE_CONNECTION,
             name: <FormattedMessage id="onboarding.setUpConnection" />,
@@ -273,8 +269,6 @@ export const CreationFormPage: React.FC = () => {
     [EntityStepsTypes.DESTINATION]: "destinations.newDestinationTitle",
     [EntityStepsTypes.SOURCE]: "sources.newSourceTitle",
   } as Record<EntityStepsTypes, string>)[type];
-
-  console.log("currentStep", currentStep);
 
   return (
     <>

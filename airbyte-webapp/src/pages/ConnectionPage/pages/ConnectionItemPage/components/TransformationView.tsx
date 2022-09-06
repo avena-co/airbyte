@@ -13,10 +13,14 @@ import { useCurrentWorkspace } from "hooks/services/useWorkspace";
 import { useGetDestinationDefinitionSpecification } from "services/connector/DestinationDefinitionSpecificationService";
 import { FormikOnSubmit } from "types/formik";
 import { NormalizationField } from "views/Connection/ConnectionForm/components/NormalizationField";
+import { PipelineField } from "views/Connection/ConnectionForm/components/PipelineField";
+// import { DeduplicationField } from "views/Connection/ConnectionForm/components/DeduplicationField";
 import { TransformationField } from "views/Connection/ConnectionForm/components/TransformationField";
 import { ConnectionFormMode } from "views/Connection/ConnectionForm/ConnectionForm";
 import {
   getInitialNormalization,
+  getInitialPipeline,
+  // getInitialDeduplication,
   getInitialTransformations,
   mapFormPropsToOperation,
   useDefaultTransformation,
@@ -120,6 +124,59 @@ const NormalizationCard: React.FC<{
   );
 };
 
+const PipelineCard: React.FC<{
+  onSubmit: FormikOnSubmit<{ pipeline?: string }>;
+  mode: ConnectionFormMode;
+}> = ({ onSubmit, mode }) => {
+  const initialValues = useMemo(
+    () => ({
+      pipeline: getInitialPipeline(),
+    }),
+    []
+  );
+
+  return (
+    <FormCard<{ pipeline?: string }>
+      form={{
+        initialValues,
+        onSubmit,
+      }}
+      title={<FormattedMessage id="connectionForm.pipeline.selection" />}
+      collapsible
+      mode={mode}
+    >
+      <Field name="pipeline" component={PipelineField} mode={mode} />
+    </FormCard>
+  );
+};
+
+// const DeduplicationCard: React.FC<{
+//   operations?: OperationRead[];
+//   onSubmit: FormikOnSubmit<{ deduplication?: boolean }>;
+//   mode: ConnectionFormMode;
+// }> = ({ operations, onSubmit, mode }) => {
+//   const initialValues = useMemo(
+//     () => ({
+//       deduplication: getInitialDeduplication(operations, true),
+//     }),
+//     [operations]
+//   );
+
+//   return (
+//     <FormCard<{ deduplication?: boolean }>
+//       form={{
+//         initialValues,
+//         onSubmit,
+//       }}
+//       title={<FormattedMessage id="connection.deduplication" />}
+//       collapsible
+//       mode={mode}
+//     >
+//       <Field name="deduplication" component={DeduplicationField} mode={mode} />
+//     </FormCard>
+//   );
+// };
+
 const TransformationView: React.FC<TransformationViewProps> = ({ connection }) => {
   const definition = useGetDestinationDefinitionSpecification(connection.destination.destinationDefinitionId);
   const { mutateAsync: updateConnection } = useUpdateConnection();
@@ -130,7 +187,7 @@ const TransformationView: React.FC<TransformationViewProps> = ({ connection }) =
 
   const mode = connection.status === ConnectionStatus.deprecated ? "readonly" : "edit";
 
-  const onSubmit: FormikOnSubmit<{ transformations?: OperationRead[]; normalization?: NormalizationType }> = async (
+  const onSubmit: FormikOnSubmit<{ transformations?: OperationRead[]; normalization?: NormalizationType; deduplication?: boolean; pipeline?: string }> = async (
     values,
     { resetForm }
   ) => {
@@ -138,11 +195,11 @@ const TransformationView: React.FC<TransformationViewProps> = ({ connection }) =
 
     const operations = values.transformations
       ? (connection.operations as OperationCreate[]) // There's an issue meshing the OperationRead here with OperationCreate that we want, in the types
-          ?.filter((op) => op.operatorConfiguration.operatorType === OperatorType.normalization)
-          .concat(newOp)
+        ?.filter((op) => op.operatorConfiguration.operatorType === OperatorType.normalization)
+        .concat(newOp)
       : newOp.concat(
-          (connection.operations ?? [])?.filter((op) => op.operatorConfiguration.operatorType === OperatorType.dbt)
-        );
+        (connection.operations ?? [])?.filter((op) => op.operatorConfiguration.operatorType === OperatorType.dbt)
+      );
 
     await updateConnection(
       buildConnectionUpdate(connection, {
@@ -168,6 +225,8 @@ const TransformationView: React.FC<TransformationViewProps> = ({ connection }) =
         {supportsNormalization && (
           <NormalizationCard operations={connection.operations} onSubmit={onSubmit} mode={mode} />
         )}
+        <PipelineCard onSubmit={onSubmit} mode={mode} />
+        {/* <DeduplicationCard operations={connection.operations} onSubmit={onSubmit} mode={mode} /> */}
         {supportsDbt && (
           <CustomTransformationsCard operations={connection.operations} onSubmit={onSubmit} mode={mode} />
         )}

@@ -16,6 +16,7 @@ import useRouter from "hooks/useRouter";
 import { RoutePaths } from "../../../pages/routePaths";
 import ConnectionsIcon from "./components/ConnectionsIcon";
 import DestinationIcon from "./components/DestinationIcon";
+import PipelinesIcon from "./components/PipelinesIcon";
 import DocsIcon from "./components/DocsIcon";
 import OnboardingIcon from "./components/OnboardingIcon";
 import SettingsIcon from "./components/SettingsIcon";
@@ -118,6 +119,14 @@ const SideBar: React.FC = () => {
               <DestinationIcon />
               <Text>
                 <FormattedMessage id="sidebar.destinations" />
+              </Text>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={navLinkClassName} to={RoutePaths.Pipelines}>
+              <PipelinesIcon color="white" />
+              <Text>
+                <FormattedMessage id="sidebar.pipelines" />
               </Text>
             </NavLink>
           </li>

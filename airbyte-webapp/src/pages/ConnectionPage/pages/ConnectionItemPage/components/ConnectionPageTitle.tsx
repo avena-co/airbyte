@@ -45,6 +45,10 @@ const ConnectionPageTitle: React.FC<ConnectionPageTitleProps> = ({
         id: ConnectionSettingsRoutes.TRANSFORMATION,
         name: <FormattedMessage id="connectionForm.transformation.title" />,
       },
+      // {
+      //   id: ConnectionSettingsRoutes.PIPELINE,
+      //   name: <FormattedMessage id="connectionForm.pipeline.title" />,
+      // },
     ];
 
     connection.status !== ConnectionStatus.deprecated &&

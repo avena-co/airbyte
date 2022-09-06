@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Button, H2 } from "components/base";
 
 interface EmptyResourceListViewProps {
-  resourceType: "connections" | "destinations" | "sources";
+  resourceType: "connections" | "destinations" | "sources" | "pipelines";
   onCreateClick: () => void;
   disableCreateButton?: boolean;
 }

@@ -1,0 +1,21 @@
+---
+"$schema": http://json-schema.org/draft-07/schema#
+"$id": https://github.com/airbytehq/airbyte/blob/master/airbyte-config/models/src/main/resources/types/Pipeline.yaml
+title: Pipeline
+description: configuration required for pipeline for ALL sources
+type: object
+required:
+  - connectionId
+  - name
+additionalProperties: false
+properties:
+  connectionId:
+    type: string
+    format: uuid
+  name:
+    type: string
+  pipelineId:
+    type: string
+    format: uuid
+  resourceRequirements:
+    "$ref": ResourceRequirements.yaml

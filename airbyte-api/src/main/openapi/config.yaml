@@ -49,6 +49,8 @@ tags:
     description: Destination related resources.
   - name: connection
     description: Connection between sources and destinations.
+  - name: pipeline
+    description: IntelliBridge Pipelines.
   - name: oauth
     description: OAuth related resources to delegate access from user.
   - name: db_migration
@@ -1287,6 +1289,27 @@ paths:
                 $ref: "#/components/schemas/ConnectionRead"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
+  /v1/pipelines/create:
+    post:
+      tags:
+        - pipeline
+      summary: Create a pipeline for a connection
+      operationId: createPipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PipelineCreate"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineRead"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
   /v1/connections/update:
     post:
       tags:
@@ -1306,6 +1329,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConnectionRead"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+  /v1/pipelines/update:
+    post:
+      tags:
+        - pipeline
+      summary: Update a pipeline
+      operationId: updatePipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PipelineUpdate"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineRead"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
   /v1/connections/list:
@@ -1328,6 +1372,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConnectionReadList"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+  /v1/pipelines/list:
+    post:
+      tags:
+        - pipeline
+      summary: Returns all pipelines for a workspace.
+      description: List pipelines for workspace. Does not return deleted pipelines.
+      operationId: listPipelinesForWorkspace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkspaceIdRequestBody"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineReadList"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "422":
@@ -1356,6 +1424,30 @@ paths:
           $ref: "#/components/responses/NotFoundResponse"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
+  /v1/pipelines/list_all:
+    post:
+      tags:
+        - pipeline
+      summary: Returns all pipelines for a workspace, including deleted pipelines.
+      description: List pipelines for workspace, including deleted pipelines.
+      operationId: listAllPipelinesForWorkspace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkspaceIdRequestBody"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineReadList"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
   /v1/connections/get:
     post:
       tags:
@@ -1375,6 +1467,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConnectionRead"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+  /v1/pipelines/get:
+    post:
+      tags:
+        - pipeline
+      summary: Get a pipeline
+      operationId: getPipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PipelineIdRequestBody"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineRead"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "422":
@@ -1423,6 +1538,27 @@ paths:
                 $ref: "#/components/schemas/ConnectionReadList"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
+  /v1/pipelines/search:
+    post:
+      tags:
+        - pipeline
+      summary: Search pipelines
+      operationId: searchPipelines
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PipelineSearch"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineReadList"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
   /v1/connections/delete:
     post:
       tags:
@@ -1434,6 +1570,25 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/ConnectionIdRequestBody"
+        required: true
+      responses:
+        "204":
+          description: The resource was deleted successfully.
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+  /v1/pipelines/delete:
+    post:
+      tags:
+        - pipeline
+      summary: Delete a pipeline
+      operationId: deletePipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PipelineIdRequestBody"
         required: true
       responses:
         "204":
@@ -1887,6 +2042,29 @@ paths:
           $ref: "#/components/responses/NotFoundResponse"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
+  /v1/web_backend/pipelines/list:
+    post:
+      tags:
+        - web_backend
+      summary: Returns all non-deleted pipelines for a workspace.
+      operationId: webBackendListPipelinesForWorkspace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkspaceIdRequestBody"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebBackendPipelineReadList"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
   /v1/web_backend/connections/list_all:
     post:
       tags:
@@ -1906,6 +2084,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WebBackendConnectionReadList"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+  /v1/web_backend/pipelines/list_all:
+    post:
+      tags:
+        - web_backend
+      summary: Returns all pipelines for a workspace.
+      operationId: webBackendListAllPipelinesForWorkspace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkspaceIdRequestBody"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebBackendPipelineReadList"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "422":
@@ -1933,6 +2134,29 @@ paths:
           $ref: "#/components/responses/NotFoundResponse"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
+  /v1/web_backend/pipelines/get:
+    post:
+      tags:
+        - web_backend
+      summary: Get a pipeline
+      operationId: webBackendGetPipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebBackendPipelineRequestBody"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebBackendPipelineRead"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
   /v1/web_backend/connections/create:
     post:
       tags:
@@ -1952,6 +2176,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WebBackendConnectionRead"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+  /v1/web_backend/pipelines/create:
+    post:
+      tags:
+        - web_backend
+      summary: Create a pipeline
+      operationId: webBackendCreatePipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebBackendPipelineCreate"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebBackendPipelineRead"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
   /v1/web_backend/connections/update:
@@ -1975,6 +2220,27 @@ paths:
                 $ref: "#/components/schemas/WebBackendConnectionRead"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
+  /v1/web_backend/pipelines/update:
+    post:
+      tags:
+        - web_backend
+      summary: Update a pipeline
+      operationId: webBackendUpdatePipeline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebBackendPipelineUpdate"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebBackendPipelineRead"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
   /v1/web_backend/connections/updateNew:
     post:
       operationId: webBackendUpdateConnectionNew
@@ -1996,6 +2262,27 @@ paths:
       summary: Update a connection
       tags:
         - web_backend
+  /v1/web_backend/pipelines/updateNew:
+    post:
+      operationId: webBackendUpdatePipelineNew
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebBackendPipelineUpdate"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebBackendPipelineRead"
+          description: Successful operation
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+      summary: Update a pipeline
+      tags:
+        - web_backend
   /v1/web_backend/connections/search:
     post:
       tags:
@@ -2015,6 +2302,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WebBackendConnectionReadList"
+        "422":
+          $ref: "#/components/responses/InvalidInputResponse"
+  /v1/web_backend/pipelines/search:
+    post:
+      tags:
+        - web_backend
+      summary: Search pipelines
+      operationId: webBackendSearchPipelines
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebBackendPipelineSearch"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebBackendPipelineReadList"
         "422":
           $ref: "#/components/responses/InvalidInputResponse"
   /v1/web_backend/state/get_type:
@@ -2168,7 +2476,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/HealthCheckRead"
       # This route is unsecured for external monitoring.
-      security: []
+      security: [ ]
   /v1/logs/get:
     post:
       tags:
@@ -2497,12 +2805,15 @@ components:
         - hasConnections
         - hasSources
         - hasDestinations
+        - hasPipelines
       properties:
         hasConnections:
           type: boolean
         hasSources:
           type: boolean
         hasDestinations:
+          type: boolean
+        hasPipelines:
           type: boolean
     # SLUG
     SlugRequestBody:
@@ -2663,7 +2974,7 @@ components:
       properties:
         auth_type:
           type: string
-          enum: ["oauth2.0"] # Future auth types should be added here
+          enum: [ "oauth2.0" ] # Future auth types should be added here
         oauth2Specification:
           "$ref": "#/components/schemas/OAuth2Specification"
     OAuth2Specification:
@@ -2685,7 +2996,7 @@ components:
             If they were inside a oneOf {'switch': {oneOf: [{client_id...}, {non_oauth_param]}},  rootObject=['switch', 0]
             "
           type: array
-          items: {} # <--- using generic any type. Build fails with oneOf (https://github.com/OpenAPITools/openapi-generator/issues/6161)
+          items: { } # <--- using generic any type. Build fails with oneOf (https://github.com/OpenAPITools/openapi-generator/issues/6161)
           example:
             - path
             - 1
@@ -3163,6 +3474,9 @@ components:
     ConnectionId:
       type: string
       format: uuid
+    PipelineId:
+      type: string
+      format: uuid
     ConnectionIdRequestBody:
       type: object
       required:
@@ -3170,6 +3484,13 @@ components:
       properties:
         connectionId:
           $ref: "#/components/schemas/ConnectionId"
+    PipelineIdRequestBody:
+      type: object
+      required:
+        - pipelineId
+      properties:
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
     DbMigrationRequestBody:
       type: object
       required:
@@ -3186,6 +3507,15 @@ components:
           type: boolean
         connectionId:
           $ref: "#/components/schemas/ConnectionId"
+    WebBackendPipelineRequestBody:
+      type: object
+      required:
+        - pipelineId
+      properties:
+        withRefreshedCatalog:
+          type: boolean
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
     ConnectionCreate:
       type: object
       required:
@@ -3229,6 +3559,16 @@ components:
         sourceCatalogId:
           type: string
           format: uuid
+    PipelineCreate:
+      type: object
+      required:
+        - connectionId
+      properties:
+        name:
+          type: string
+          description: Optional name of the pipeline
+        connectionId:
+          $ref: "#/components/schemas/ConnectionId"
     WebBackendConnectionCreate:
       type: object
       required:
@@ -3276,6 +3616,16 @@ components:
         sourceCatalogId:
           type: string
           format: uuid
+    WebBackendPipelineCreate:
+      type: object
+      required:
+        - connectionId
+      properties:
+        name:
+          type: string
+          description: Optional name of the pipeline
+        connectionId:
+          $ref: "#/components/schemas/ConnectionId"
     ConnectionUpdate:
       type: object
       required:
@@ -3317,6 +3667,16 @@ components:
         sourceCatalogId:
           type: string
           format: uuid
+    PipelineUpdate:
+      type: object
+      required:
+        - pipelineId
+      properties:
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
+        name:
+          type: string
+          description: Name that will be set to this connection
     WebBackendConnectionUpdate:
       type: object
       required:
@@ -3366,6 +3726,16 @@ components:
         sourceCatalogId:
           type: string
           format: uuid
+    WebBackendPipelineUpdate:
+      type: object
+      required:
+        - pipelineId
+      properties:
+        name:
+          type: string
+          description: Name that will be set to the pipeline
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
     ConnectionRead:
       type: object
       required:
@@ -3413,6 +3783,19 @@ components:
         sourceCatalogId:
           type: string
           format: uuid
+    PipelineRead:
+      type: object
+      required:
+        - pipelineId
+        - name
+        - connectionId
+      properties:
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
+        name:
+          type: string
+        connectionId:
+          $ref: "#/components/schemas/ConnectionId"
     ConnectionSearch:
       type: object
       properties:
@@ -3446,6 +3829,15 @@ components:
           $ref: "#/components/schemas/SourceSearch"
         destination:
           $ref: "#/components/schemas/DestinationSearch"
+    PipelineSearch:
+      type: object
+      properties:
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
+        name:
+          type: string
+        connectionId:
+          $ref: "#/components/schemas/ConnectionId"
     WebBackendConnectionSearch:
       type: object
       properties:
@@ -3479,6 +3871,15 @@ components:
           $ref: "#/components/schemas/SourceSearch"
         destination:
           $ref: "#/components/schemas/DestinationSearch"
+    WebBackendPipelineSearch:
+      type: object
+      properties:
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
+        name:
+          type: string
+        connection:
+          $ref: "#/components/schemas/ConnectionSearch"
     ConnectionReadList:
       type: object
       required:
@@ -3488,6 +3889,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ConnectionRead"
+    PipelineReadList:
+      type: object
+      required:
+        - pipelines
+      properties:
+        pipelines:
+          type: array
+          items:
+            $ref: "#/components/schemas/PipelineRead"
     ConnectionStatus:
       type: string
       description: Active means that data is flowing through the connection. Inactive means it is not. Deprecated means the connection is off and cannot be re-activated. the schema field describes the elements of the schema that will be synced.
@@ -4398,7 +4808,7 @@ components:
       properties:
         authFlowType:
           type: string
-          enum: ["oauth2.0", "oauth1.0"]
+          enum: [ "oauth2.0", "oauth1.0" ]
         predicateKey:
           description: Json Path to a field in the connectorSpecification that should exist for the advanced auth to be applicable.
           type: array
@@ -4667,6 +5077,21 @@ components:
           format: uuid
         catalogDiff:
           $ref: "#/components/schemas/CatalogDiff"
+    WebBackendPipelineRead:
+      type: object
+      required:
+        - pipelineId
+        - name
+        - connectionId
+      properties:
+        pipelineId:
+          $ref: "#/components/schemas/PipelineId"
+        name:
+          type: string
+        connectionId:
+          $ref: "#/components/schemas/ConnectionId"
+        connection:
+          $ref: "#/components/schemas/ConnectionRead"
     WebBackendConnectionReadList:
       type: object
       required:
@@ -4676,6 +5101,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/WebBackendConnectionRead"
+    WebBackendPipelineReadList:
+      type: object
+      required:
+        - pipelines
+      properties:
+        pipelines:
+          type: array
+          items:
+            $ref: "#/components/schemas/WebBackendPipelineRead"
     SyncMode:
       type: string
       enum:
@@ -4819,4 +5253,4 @@ components:
           schema:
             $ref: "#/components/schemas/KnownExceptionInfo"
 security:
-  - {}
+  - { }

@@ -5,6 +5,7 @@
 package io.airbyte.api.client;
 
 import io.airbyte.api.client.generated.ConnectionApi;
+import io.airbyte.api.client.generated.PipelineApi;
 import io.airbyte.api.client.generated.DbMigrationApi;
 import io.airbyte.api.client.generated.DestinationApi;
 import io.airbyte.api.client.generated.DestinationDefinitionApi;
@@ -22,96 +23,102 @@ import io.airbyte.api.client.invoker.generated.ApiClient;
  * This class is meant to consolidate all our API endpoints into a fluent-ish client. Currently, all
  * open API generators create a separate class per API "root-route". For example, if our API has two
  * routes "/v1/First/get" and "/v1/Second/get", OpenAPI generates (essentially) the following files:
- *
+ * <p>
  * ApiClient.java, FirstApi.java, SecondApi.java
- *
+ * <p>
  * To call the API type-safely, we'd do new FirstApi(new ApiClient()).get() or new SecondApi(new
  * ApiClient()).get(), which can get cumbersome if we're interacting with many pieces of the API.
- *
+ * <p>
  * This is currently manually maintained. We could look into autogenerating it if needed.
  */
 public class AirbyteApiClient {
 
-  private final ConnectionApi connectionApi;
-  private final DestinationDefinitionApi destinationDefinitionApi;
-  private final DestinationApi destinationApi;
-  private final DestinationDefinitionSpecificationApi destinationSpecificationApi;
-  private final JobsApi jobsApi;
-  private final PatchedLogsApi logsApi;
-  private final OperationApi operationApi;
-  private final SourceDefinitionApi sourceDefinitionApi;
-  private final SourceApi sourceApi;
-  private final SourceDefinitionSpecificationApi sourceDefinitionSpecificationApi;
-  private final WorkspaceApi workspaceApi;
-  private final HealthApi healthApi;
-  private final DbMigrationApi dbMigrationApi;
+    private final ConnectionApi connectionApi;
+    private final PipelineApi pipelineApi;
+    private final DestinationDefinitionApi destinationDefinitionApi;
+    private final DestinationApi destinationApi;
+    private final DestinationDefinitionSpecificationApi destinationSpecificationApi;
+    private final JobsApi jobsApi;
+    private final PatchedLogsApi logsApi;
+    private final OperationApi operationApi;
+    private final SourceDefinitionApi sourceDefinitionApi;
+    private final SourceApi sourceApi;
+    private final SourceDefinitionSpecificationApi sourceDefinitionSpecificationApi;
+    private final WorkspaceApi workspaceApi;
+    private final HealthApi healthApi;
+    private final DbMigrationApi dbMigrationApi;
 
-  public AirbyteApiClient(final ApiClient apiClient) {
-    connectionApi = new ConnectionApi(apiClient);
-    destinationDefinitionApi = new DestinationDefinitionApi(apiClient);
-    destinationApi = new DestinationApi(apiClient);
-    destinationSpecificationApi = new DestinationDefinitionSpecificationApi(apiClient);
-    jobsApi = new JobsApi(apiClient);
-    logsApi = new PatchedLogsApi(apiClient);
-    operationApi = new OperationApi(apiClient);
-    sourceDefinitionApi = new SourceDefinitionApi(apiClient);
-    sourceApi = new SourceApi(apiClient);
-    sourceDefinitionSpecificationApi = new SourceDefinitionSpecificationApi(apiClient);
-    workspaceApi = new WorkspaceApi(apiClient);
-    healthApi = new HealthApi(apiClient);
-    dbMigrationApi = new DbMigrationApi(apiClient);
-  }
+    public AirbyteApiClient(final ApiClient apiClient) {
+        connectionApi = new ConnectionApi(apiClient);
+        pipelineApi = new PipelineApi(apiClient);
+        destinationDefinitionApi = new DestinationDefinitionApi(apiClient);
+        destinationApi = new DestinationApi(apiClient);
+        destinationSpecificationApi = new DestinationDefinitionSpecificationApi(apiClient);
+        jobsApi = new JobsApi(apiClient);
+        logsApi = new PatchedLogsApi(apiClient);
+        operationApi = new OperationApi(apiClient);
+        sourceDefinitionApi = new SourceDefinitionApi(apiClient);
+        sourceApi = new SourceApi(apiClient);
+        sourceDefinitionSpecificationApi = new SourceDefinitionSpecificationApi(apiClient);
+        workspaceApi = new WorkspaceApi(apiClient);
+        healthApi = new HealthApi(apiClient);
+        dbMigrationApi = new DbMigrationApi(apiClient);
+    }
 
-  public ConnectionApi getConnectionApi() {
-    return connectionApi;
-  }
+    public ConnectionApi getConnectionApi() {
+        return connectionApi;
+    }
 
-  public DestinationDefinitionApi getDestinationDefinitionApi() {
-    return destinationDefinitionApi;
-  }
+    public PipelineApi getPipelineApi() {
+        return pipelineApi;
+    }
 
-  public DestinationApi getDestinationApi() {
-    return destinationApi;
-  }
+    public DestinationDefinitionApi getDestinationDefinitionApi() {
+        return destinationDefinitionApi;
+    }
 
-  public DestinationDefinitionSpecificationApi getDestinationDefinitionSpecificationApi() {
-    return destinationSpecificationApi;
-  }
+    public DestinationApi getDestinationApi() {
+        return destinationApi;
+    }
 
-  public JobsApi getJobsApi() {
-    return jobsApi;
-  }
+    public DestinationDefinitionSpecificationApi getDestinationDefinitionSpecificationApi() {
+        return destinationSpecificationApi;
+    }
 
-  public SourceDefinitionApi getSourceDefinitionApi() {
-    return sourceDefinitionApi;
-  }
+    public JobsApi getJobsApi() {
+        return jobsApi;
+    }
 
-  public SourceApi getSourceApi() {
-    return sourceApi;
-  }
+    public SourceDefinitionApi getSourceDefinitionApi() {
+        return sourceDefinitionApi;
+    }
 
-  public SourceDefinitionSpecificationApi getSourceDefinitionSpecificationApi() {
-    return sourceDefinitionSpecificationApi;
-  }
+    public SourceApi getSourceApi() {
+        return sourceApi;
+    }
 
-  public WorkspaceApi getWorkspaceApi() {
-    return workspaceApi;
-  }
+    public SourceDefinitionSpecificationApi getSourceDefinitionSpecificationApi() {
+        return sourceDefinitionSpecificationApi;
+    }
 
-  public PatchedLogsApi getLogsApi() {
-    return logsApi;
-  }
+    public WorkspaceApi getWorkspaceApi() {
+        return workspaceApi;
+    }
 
-  public OperationApi getOperationApi() {
-    return operationApi;
-  }
+    public PatchedLogsApi getLogsApi() {
+        return logsApi;
+    }
 
-  public HealthApi getHealthApi() {
-    return healthApi;
-  }
+    public OperationApi getOperationApi() {
+        return operationApi;
+    }
 
-  public DbMigrationApi getDbMigrationApi() {
-    return dbMigrationApi;
-  }
+    public HealthApi getHealthApi() {
+        return healthApi;
+    }
+
+    public DbMigrationApi getDbMigrationApi() {
+        return dbMigrationApi;
+    }
 
 }
